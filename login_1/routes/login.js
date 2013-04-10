@@ -8,7 +8,7 @@
 
 
 var mongoose = require('mongoose');
-var db = mongoose.connect('mongodb://localhost/mydb');
+var db = mongoose.connect('mongodb://localhost/mydb2');
 
 var Schema = mongoose.Schema;
 
@@ -21,38 +21,39 @@ var userinfo = mongoose.model('userinfo', userSchema);
 
 var instance = new userinfo();
 
-instance.userid = "test";
-instance.PWD = "123";
+//instance.userid = "test11";
+//instance.PWD = "123";
 
 var ID;
 var pw;
 exports.login = function(req,res){
 
-    console.log("Non Save function state: "+instance.userid);
-    instance.save(function(err){
+    console.log("Non Save function state: "+req.body.id);
+    /*instance.save(function(err){
         if(err){
             console.log("==========FAIL DB SAVE===========");
         }
 
-    });
+    });  */
 
-    userinfo.find({},function(err, info){
+    userinfo.findOne({userid:req.body.id},function(err, info){
         if(err){
             console.log("==========FAIL DB FIND===========");
         }
         ID = info.userid;
         pw = info.PWD;
+
+        if(req.body.id == ID && req.body.password == pw){
+            res.render('login'
+                ,{ title: 'LOGIN'
+                    ,username: req.body.id
+                });
+        }
+        else{
+            res.render('login_F',{title:'LOGIN_F'});
+        }
     });
     console.log("Save function state: "+ID);
 
-    if(req.body.id == ID && req.body.password == pw){
-    res.render('login'
-        ,{ title: 'LOGIN'
-            ,username: req.body.id
-        });
-    }
-    else{
-        res.render('login_F',{title:'LOGIN_F'});
-    }
 };
 
