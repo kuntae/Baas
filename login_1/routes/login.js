@@ -8,7 +8,7 @@
 
 
 var mongoose = require('mongoose');
-var db = mongoose.connect('mongodb://localhost/mydb2');
+var db = mongoose.connect('mongodb://113.198.80.236:27017/mydb2');
 
 var Schema = mongoose.Schema;
 
@@ -54,6 +54,9 @@ exports.login = function(req,res){
         }
     });
     console.log("Save function state: "+ID);
+
+    res.redirect('/user_management');
+
 
 };
 
