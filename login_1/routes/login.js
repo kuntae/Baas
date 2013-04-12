@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Created with JetBrains WebStorm.
  * User: pc
  * Date: 13. 4. 9
@@ -24,8 +24,9 @@ var instance = new userinfo();
 //instance.userid = "test11";
 //instance.PWD = "123";
 
-var ID;
+var ID; //input
 var pw;
+
 exports.login = function(req,res){
 
     console.log("Non Save function state: "+req.body.id);
