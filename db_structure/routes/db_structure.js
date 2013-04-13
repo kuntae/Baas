@@ -14,8 +14,8 @@ var db;
 
 var Schema = mongoose.Schema;
 var test = new Schema({
-    name : String,
-    age : String
+    id : String,
+    PWD : String
 });
 
 var ex = exports.ex = mongoose.model('ex',test);
@@ -32,6 +32,5 @@ db = mongoose.connect(url,function(err,done){
 
 
 exports.save = function(req,res){
-
     res.render('db_test',{title:"Mongoose"});
 };

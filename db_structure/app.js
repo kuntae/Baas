@@ -8,7 +8,9 @@ var express = require('express')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
-  , db_structure = require('./routes/db_structure');
+  , db_structure = require('./routes/db_structure')
+    , test_save = require('./routes/test_save')
+    , test_load = require('./routes/test_load');
 
 var app = express();
 
@@ -31,6 +33,8 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/db_test',db_structure.save) ;
+app.post('/test_save',test_save.testsave);
+app.get('/test_load',test_load.testload);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
