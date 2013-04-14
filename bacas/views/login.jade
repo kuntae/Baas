@@ -1,0 +1,19 @@
+//
+   Created with JetBrains WebStorm.
+   User: root
+   Date: 13. 4. 14
+   Time: 오후 4:08
+   To change this template use File | Settings | File Templates.
+
+extends layout
+
+block content
+    h1= title
+    p Welcome to #{title}
+
+    form(name="form", method="post", action="/login/chk")
+        label(for='id') id
+        input(type="text", id="id", name="id")
+        label(for='password') password
+        input(type="password", id="password", name="password")
+        input(type="submit", name="", value="제출")

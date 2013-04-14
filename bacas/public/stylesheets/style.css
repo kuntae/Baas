@@ -1,0 +1,15 @@
+body {
+  padding: 0px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.menu {width:100%; overflow:hidden;}
+.menu ul {text-align: left; padding:0; margin:0}
+.menu li {display: inline; list-style:none; font-size:20px; text-transform:uppercase}
+.menu li a {padding:13px 13px 13px 13px; color: #000000; border-right:#7c7c7a solid 1px; text-decoration:none;}
+.menu li a:hover{color:#ff3334;}
+.menu img {width: 120px;}
