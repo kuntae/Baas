@@ -14,11 +14,15 @@ exports.testsave = function(req,res){
     t_save.id = req.body.ids;
     t_save.PWD = req.body.password;
 
-    t_save.save(function(err){
+    testdb.ex.find({id:t_save.id},function(err, doc){
         if(err){
-            console.log('SAVE FAIL');
-        }
+            t_save.save(function(err){
+                if(err){
+                    console.log('SAVE FAIL');
+                }
+        });
 
+    }
         res.redirect('/test_load');
-    });
-};
+});
+}
