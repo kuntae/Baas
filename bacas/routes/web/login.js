@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-var db = require('./db_structure');
+var db = require('./../db_structure');
 
 var login = new db.userinfo();
 exports.into = function(req,res){
