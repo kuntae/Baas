@@ -7,7 +7,7 @@
  */
 
 //mongodb를 사용하기 위한 mongoose의 모듈화를 한 JavaScript
-var mongoose = require('mongoose');
+var mongoose = exports.mongoose = require('mongoose');
 var url = 'mongodb://localhost/testdb';
 var db;
 
@@ -39,6 +39,7 @@ var rankinfo = new Schema({
     func: String
 
 });
+
 
 //model export!!!
 var userinfo = exports.userinfo = mongoose.model('userinfo',userinfo);
