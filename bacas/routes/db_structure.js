@@ -41,7 +41,6 @@ var rankinfo = new Schema({
 
 });
 
-
 //model export!!!
 var userinfo = exports.userinfo = mongoose.model('userinfo',userinfo);
 var rankinfo = exports.rankinfo = mongoose.model('rankinfo',rankinfo);
