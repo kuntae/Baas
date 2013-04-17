@@ -45,28 +45,6 @@ var rankinfo = new Schema({
 var userinfo = exports.userinfo = mongoose.model('userinfo',userinfo);
 var rankinfo = exports.rankinfo = mongoose.model('rankinfo',rankinfo);
 
-var o = {};
-o.map = function(){
-    //this.used_function.forEach(function(element){
-        emit(this.used_function,{count:1}) ;
-    //});
-}
-o.reduce = function(k, vals){
-    var total = 0;
-    for(var i=0; i<vals.length; i++){
-        total+=vals[i].count;
-    }
-    return {count: total}
-}
-o.out = {replace: 'sorts'}
-o.verbose = true;
-
-rankinfo.mapReduce(o, function(err, model, stats){
-    console.log('map reduce took %d ms', stats.processtime);
-    model.find({},function(err, result){
-        console.log(result);
-    });
-})
 exports.database = function(req,res){
     res.redirect('/login');
 };

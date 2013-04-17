@@ -32,15 +32,15 @@ block content
             var three_bar = new bar_outline( 75, '0x533990', '0x533990');
 
             total_bar.key( 'Total', 10 );
-            one_bar.key( 'One', 10 );
-            two_bar.key( 'Two', 10 );
-            three_bar.key( 'Three', 10 );
+            one_bar.key( '#{r1}', 10 );
+            two_bar.key( '#{r2}', 10 );
+            three_bar.key( '#{r3}', 10 );
 
             for(var i=0; i<10; i++ ) {
-                total_bar.data.push(10);
-                one_bar.data.push(20);
-                two_bar.data.push(30);
-                three_bar.data.push(40);
+                //total_bar.data.push(10);
+                one_bar.data.push(#{r1_p});
+                two_bar.data.push(#{r2_p});
+                three_bar.data.push(#{r3_p});
                 x_axis[i] = "x값";
             }
             var g= new graph(660, 250);							// 그래프 크기
@@ -111,15 +111,15 @@ block content
             var data = [];
             var links = [];
 
-            data.push(10);
-            data.push(20);
-            data.push(30);
+            data.push(#{r1_p});
+            data.push(#{r2_p});
+            data.push(#{r3_p});
 
             var g = new graph(600, 400);                        // 그래프 크기
             g.set_bg_colour( '#FFFFFF' );						// 배경색 지정
 
             g.pie(60, '#FFFFFF', '{font-size: 12px; color: #404040; }', false, 1);
-            g.pie_values( data, ['one','two','three']);
+            g.pie_values( data, ['#{r1}','#{r2}','#{r3}']);
             g.pie_slice_colours( ['#FFA1C4', '#C188EA', '#9DC7F2'] );
             g.set_tool_tip( '#val#&' );
 
