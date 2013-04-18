@@ -56,7 +56,7 @@ app.get('/web/rank_management', rank_management.rank_page);
 app.get('/web/datatree', datatree.datatree_page);
 app.get('/web/developer_management', developer_management.developer_page);
 app.post('/web/register', push_management.regist);
-app.get('/web/send', push_management.send_push);
+app.post('/web/send', push_management.send_push);
 //================================mobile page=======================================
 app.get('/mobile/rank',rank.into);
 
