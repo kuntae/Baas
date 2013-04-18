@@ -25,8 +25,8 @@ exports.rank_page= function (req, res) {
     var function_cnt = new Array(3);
 
     for(i=0; i<3; i++){
-        function_name[i] = "'empty'";
-        function_cnt[i] = 1;
+        function_name[i] = "empty";
+        function_cnt[i] = 0;
     }
 
     console.log("rank page");

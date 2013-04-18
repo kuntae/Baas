@@ -35,7 +35,7 @@ var userinfo = new Schema({
 //==================================================================================
 var rankinfo = new Schema({
     used_function: String,
-    date: String,
+    date: Date,
     location: String,
     usre_id: String
 

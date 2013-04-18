@@ -35,6 +35,15 @@ exports.into = function(req,res){
     rank.location = location;
     rank.user_id = user_id;
     rank.app_id = app_id;
+    rank.date = Date.now();
+    ((Date.getYear()+1900)+(Date.getMonth()+1)+(Date.getDate())).toString(function(result){
+        console.log(result);
+    });
+    console.log(rank.date.getDate());
+    console.log(rank.date.getMonth()+1);
+    console.log(rank.date.getYear()+1900);
+
+    console.log();
     rank.save(function(err){
         try{
             res.render('rank',{title:"rank"});

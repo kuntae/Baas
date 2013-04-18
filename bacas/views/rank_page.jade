@@ -24,7 +24,7 @@ block content
         // 막대 그래프
         function bar_graph() {
             var x_axis = new Array();
-            var max = 100;                                          // y의 최대 값을 지정
+            var max = #{r1_p};                                          // y의 최대 값을 지정
 
             var total_bar = new bar_outline( 75, '0x000000', '0x000000');
             var one_bar = new bar_outline( 75, '0x3B5998', '0x3B5998');
@@ -36,13 +36,15 @@ block content
             two_bar.key( '#{r2}', 10 );
             three_bar.key( '#{r3}', 10 );
 
-            for(var i=0; i<10; i++ ) {
-                //total_bar.data.push(10);
-                one_bar.data.push(#{r1_p});
-                two_bar.data.push(#{r2_p});
-                three_bar.data.push(#{r3_p});
-                x_axis[i] = "x값";
-            }
+            //for(var i=0; i<10; i++ ) {
+            //total_bar.data.push(10);
+            one_bar.data.push(#{r1_p});
+            two_bar.data.push(#{r2_p});
+            three_bar.data.push(#{r3_p});
+            x_axis[0] = "function1";
+            //x_axis[1] = "x값";
+            //x_axis[2] = "x값";
+            //}
             var g= new graph(660, 250);							// 그래프 크기
 
             g.set_bg_colour( '#FFFFFF' );						// 배경색 지정
