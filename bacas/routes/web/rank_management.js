@@ -20,23 +20,39 @@ o.out = {replace: 'sorts'}
 o.verbose = true;
 
 
-
 exports.rank_page= function (req, res) {
+    var function_name = new Array(3);
+    var function_cnt = new Array(3);
+
+    for(i=0; i<3; i++){
+        function_name[i] = "'empty'";
+        function_cnt[i] = 1;
+    }
+
     console.log("rank page");
+
     db.rankinfo.mapReduce(o, function(err, model, stats){
         console.log('map reduce took %d ms', stats.processtime);
+
         model.find({}).sort({'value':-1}).limit(3).exec( function(err, result){
             for(var i=0; i<result.length;i++){
                 console.log('rank %d = %s : %d',i+1, result[i]._id, result[i].value.count);
+                function_name[i] = result[i]._id;
+                function_cnt[i] =  result[i].value.count;
             }
+            console.log(function_name.length);
+
+
+            console.log(function_name[0] + ' ' + function_name[1] + ' ' + function_name[2] + ' ' + function_cnt[0] + function_cnt[1] + function_cnt[2]);
+
             res.render('rank_page', {
                 title: 'rank_page',
-                r1:result[0]._id,
-                r2:result[1]._id,
-                r3:result[2]._id,
-                r1_p:result[0].value.count,
-                r2_p:result[1].value.count,
-                r3_p:result[2].value.count
+                r1:function_name[0],
+                r2:function_name[1],
+                r3:function_name[2],
+                r1_p:function_cnt[0],
+                r2_p:function_cnt[1],
+                r3_p:function_cnt[2]
             });
         });
     })
