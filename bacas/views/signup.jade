@@ -1,21 +1,21 @@
 //
    Created with JetBrains WebStorm.
    User: root
-   Date: 13. 4. 14
-   Time: 오후 4:08
+   Date: 13. 4. 30
+   Time: 오후 4:13
    To change this template use File | Settings | File Templates.
 
 extends ../../../../backup/bacas/views/layout
 
 block content
     h1= title
-    p Welcome to Bacas
+    p Registe You ID
 
-    form(name="form", method="post", action="/login/chk")
-        label(for='id') id
+    form(name="form", method="post", action="/web/signup/chk")
+        label(for='id') i&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspd
         input(type="text", id="id", name="id")
+        br
         label(for='password') password
         input(type="password", id="password", name="password")
         input(type="submit", name="", value="제출")
-    form(name="form2", method="get", action="/web/signup")
-        input(type="submit", name="",value="register")
+

@@ -42,12 +42,13 @@ if ('development' == app.get('env')) {
 //routes
 //===================================root page======================================
 app.get('/', routes.index);
-//=================================login page=======================================
-app.get('/login',login.into);
-app.post('/login/chk',login.usercheck);
 //=================================db generation====================================
 app.get('/db_generation',db_structure.database) ;
 //================================= web pages=======================================
+app.get('/login',developer_management.into);
+app.post('/login/chk',developer_management.developerCheck);
+app.get('/web/signup',developer_management.developersignup);
+app.post('/web/signup/chk',developer_management.developersignupChk);
 app.get('/web/user_management', user_management.user_page);
 app.get('/web/push_management', push_management.push_page);
 app.get('/web/location_management', location_management.location_page);

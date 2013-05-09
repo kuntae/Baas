@@ -7,7 +7,7 @@
  */
 
 //mongodb를 사용하기 위한 mongoose의 모듈화를 한 JavaScript
-var mongoose = exports.mongoose = require('mongoose');
+var mongoose = require('mongoose');
 var url = 'mongodb://localhost:27017/testdb';
 var db;
 
@@ -24,11 +24,21 @@ db = mongoose.connect(url,function(err,done){
 
 var Schema = mongoose.Schema;
 //==================================================================================
+//developerinfo schema
+//==================================================================================
+var developerinfo = new Schema({
+    id : String,
+    PWD : String,
+    mail: String
+});
+//==================================================================================
 //userinfo schema
 //==================================================================================
 var userinfo = new Schema({
     id : String,
-    PWD : String
+    PWD : String,
+    mail: String,
+    deviceid: String
 });
 //==================================================================================
 //rnak schema
@@ -36,16 +46,18 @@ var userinfo = new Schema({
 var rankinfo = new Schema({
     used_function: String,
     date: Date,
-    location: String,
     user_id: String
 });
-
+//==================================================================================
+//????????????????????????????????????????????????????
+//==================================================================================
 var deviceinfo = new Schema({
     device_id: String,
     name: String
 });
 
 //model export!!!
+var developerinfo = exports.developerinfo = mongoose.model('developerinfo',developerinfo);
 var userinfo = exports.userinfo = mongoose.model('userinfo',userinfo);
 var rankinfo = exports.rankinfo = mongoose.model('rankinfo',rankinfo);
 var deviceinfo = exports.deviceinfo = mongoose.model('deviceinfo',deviceinfo);
