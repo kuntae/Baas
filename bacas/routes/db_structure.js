@@ -28,7 +28,7 @@ var Schema = mongoose.Schema;
 //==================================================================================
 var developerinfo = new Schema({
     id : String,
-    PWD : String,
+    pwd : String,
     mail: String
 });
 //==================================================================================
@@ -36,7 +36,7 @@ var developerinfo = new Schema({
 //==================================================================================
 var userinfo = new Schema({
     id : String,
-    PWD : String,
+    pwd : String,
     mail: String,
     deviceid: String
 });

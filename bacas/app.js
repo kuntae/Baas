@@ -10,6 +10,7 @@ var express = require('express')
   , routes = require('./routes')
   , login = require('./routes/web/login')
   , db_structure = require('./routes/db_structure')
+    testDB = require('./routes/testDB')
    //===============================web page routing javascript===================================
   , user_management = require('./routes/web/user_management')
   , push_management = require('./routes/web/push_management')
@@ -44,6 +45,9 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 //=================================db generation====================================
 app.get('/db_generation',db_structure.database) ;
+//=================================Test DataBase Case===============================
+app.get('/test',testDB.developerSave);
+app.get('/test2',testDB.userSave);
 //================================= web pages=======================================
 app.get('/login',developer_management.into);
 app.post('/login/chk',developer_management.developerCheck);

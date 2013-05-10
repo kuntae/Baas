@@ -10,18 +10,21 @@ exports.user_page= function (req, res) {
     console.log("user page");
     var idArray =[];
     var mailArray=[];
+    var deviceArray=[];
     var countValue;
     db.userinfo.find({},function(err,doc){
         countValue = doc.length;
         for(var i=0;i<doc.length;i++){
-            idArray.push(doc[i].id);
-            mailArray.push(doc[i].pwd);
+            idArray.push('\''+doc[i].id+'\'');
+            mailArray.push('\''+doc[i].mail+'\'');
+            deviceArray.push('\''+doc[i].deviceid+'\'');
         }
 
         res.render('user_page', {
             title: 'user page',
             idArray: idArray,
             mailArray:mailArray,
+            deviceArray:deviceArray,
             countValue: countValue
         });
     });

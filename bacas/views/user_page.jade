@@ -1,25 +1,36 @@
 
 
-extends ../../../../backup/bacas/views/menu_layout
+extends menu_layout
 
 block content
     script(type='text/javascript')
-        function addRow(tableid,id,mail){
+        function addRow(tableid,id,mail,device){
             var table = document.getElementById(tableid);
             var rowlen = table.rows.length;
             var row = table.insertRow(rowlen);
             row.insertCell(0).innerHTML = id;
             row.insertCell(1).innerHTML = mail;
-            row.insertCell(2).innerHTML = "3";
-            row.insertCell(3).innerHTML = "4";
+            row.insertCell(2).innerHTML = device;
+
         }
+        function generate(count){
+            var i;
+            var idArray = new Array(#{idArray});
+            var mailArray = new Array(#{mailArray});
+            var deviceArray = new Array(#{deviceArray});
+            for(i=0; i<count; i++){
+                 addRow('table',idArray[i],mailArray[i],deviceArray[i]);
+            }
+        }
+
     h1= title
     table(id='table', width='600', border=1)
        tr
            th(align="center") UserID
            th(align="center") E-Mail
            th(align="center") DeviceID
-           th(align="center") Location
 
     script(type='text/javascript')
-        addRow('table','#{idArray[0]}','#{mailArray[0]}');
+        generate('#{countValue}');
+
+
