@@ -1,11 +1,30 @@
 var regid; // regId 임시 저장 변수
 var r;
-var db = require('./../db_structure');     // db_structure를 불러온다.
+var db = require('./../db_structure');     // db_structure를 불러온다
 
 exports.push_page= function (req, res) {
-    console.log("push page");
-    res.render('push_page', {
-        title: 'push page'
+    db.deviceinfo.find({}, function(err, doc) {
+        var user_names = exports.user_names = [];
+
+        try {
+            var i = 0;
+            while (doc[i] != null) {
+                user_names.push(doc[i].name);
+                i++;
+            }
+
+            for (var i = 0; i < user_names.length; i++) {
+                user_names[i] = '\'' + user_names[i] + '\'';
+            }
+
+            res.render('push_page', {
+                title: 'push page',
+                user_names: user_names
+            });
+        }
+        catch (err) {
+            console.log(err);
+        }
     });
 }
 
@@ -30,40 +49,56 @@ exports.send_push = function(req, res) {
     var gcm = require('node-gcm');
     var message = new gcm.Message();
     var sender = new gcm.Sender('AIzaSyDk9LE1o9omiCZjeePeUoVj6FowMI9OQmk'); // API Key
-    var registrationIds = [];
-   // var msg = req.body.message.toString();
 
-   // message.addData('message', res.message); // Key, Value (보내고 싶은 메시지)
+    // message.addData('message', res.message); // Key, Value (보내고 싶은 메시지)
     message.addData('message', req.body.message);
-    console.log(req.body.message);
     message.collapseKey = 'demo';
     message.delayWhileIdle = true;
     message.timeToLive = 3;
 
     // Device ID Push
-    //registrationIds.push('APA91bE7V-vwVJ5gpNn-7hdiNIPhfTC9dNWL43DiLIPG9qheHbtTIS0M35UTSh3hkwb2D0szT4Ke2ORkuVZzfbjr_ieTic8MZaVC8WMeD4hbTuFTOmVdPOGZ2-5mAX3-MelRmS-MYHP-Ccp1Vn494I7o4_zU_ZqQ8Q');
-    //registrationIds.push(regid);
-    db.deviceinfo.findOne({name:req.body.name}, function(doc) {
+    if (req.body.to.length > 1) {
+        for (var i = 0; i < req.body.to.length; i++) {
+            db.deviceinfo.findOne({name:req.body.to[i]}, function(err, doc) {
+                try {
+                    var registrationIds = [];
+                    console.log(req.body.to[i]);
+                    r = doc.device_id;
+                    registrationIds.push(r);
+
+                    sender.send(message, registrationIds, 4, function (err, result) {
+                        if(err) {
+                            console.log(err);
+                        }
+                        console.log(result);
+
+                    });
+                    console.log(r);
+                } catch (err) {
+                    console.log(err);
+                }
+            });
+        }
+    }
+
+    db.deviceinfo.findOne({name:req.body.to}, function(err, doc) {
         try {
+            var registrationIds = [];
+            console.log(req.body.to);
             r = doc.device_id;
+            registrationIds.push(r);
+
+            sender.send(message, registrationIds, 4, function (err, result) {
+                if(err) {
+                    console.log(err);
+                }
+                console.log(result);
+
+            });
             console.log(r);
         } catch (err) {
-            console.log('Oh, Shit.....');
+            console.log(err);
         }
     });
-
-    registrationIds.push(r);
-
-    // Push Notification Send
-    sender.send(message, registrationIds, 4, function (err, result) {
-        if(err) {
-               console.log(err);
-        }
-        console.log(result);
-        res.redirect('/web/push_management');
-    });
-
-    /* sender.sendNoRetry(message, registrationIds, function (err, result) {
-     console.log(result);
-     }); // Retry 없이 보내기 */
+    res.redirect('/web/push_management');
 }

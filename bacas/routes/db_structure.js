@@ -41,7 +41,7 @@ var userinfo = new Schema({
     deviceid: String
 });
 //==================================================================================
-//rnak schema
+//rank schema
 //==================================================================================
 var rankinfo = new Schema({
     used_function: String,
@@ -56,11 +56,18 @@ var deviceinfo = new Schema({
     name: String
 });
 
+var poiinfo = new Schema({
+    lat: String,
+    lng: String,
+    address: String
+});
+
 //model export!!!
 var developerinfo = exports.developerinfo = mongoose.model('developerinfo',developerinfo);
 var userinfo = exports.userinfo = mongoose.model('userinfo',userinfo);
 var rankinfo = exports.rankinfo = mongoose.model('rankinfo',rankinfo);
 var deviceinfo = exports.deviceinfo = mongoose.model('deviceinfo',deviceinfo);
+var poiinfo = exports.poiinfo = mongoose.model('poiinfo', poiinfo);
 
 exports.database = function(req,res){
     res.redirect('/login');

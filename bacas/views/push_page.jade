@@ -3,23 +3,77 @@ extends menu_layout
 block content
     h1= title
 
+    script(type='text/javascript', src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js")
+    script(type='text/javascript')
+        $(document).ready(function() {
+            var array = new Array(#{user_names});
+
+            for (var i = 0; i < array.length; i++) {
+                var f = document.getElementById('from');
+                var addOption = new Option(array[i], array[i]);
+                f.options.add(addOption);
+            }
+        });
+
+        function selectitem(from, to) {
+            var from_box = document.getElementById('from');
+            var to_box = document.getElementById('to');
+
+            for (var i = 0; i < from_box.options.length; i++) {
+                var opt = from_box.options[i];
+                if (opt.selected) {
+                    var insOption = new Option(opt.text, opt.value);
+                    from_box.remove(i);
+                    to_box.options.add(insOption);
+                    i--;
+                }
+            }
+
+            for (var i = 0; i < to_box.options.length; i++) {
+                var opt = to_box.options[i];
+                opt.selected = 'selected';
+            }
+        }
+
+        function removeitem(from, to) {
+            var from_box = document.getElementById('from');
+            var to_box = document.getElementById('to');
+
+            for (var i = 0; i < to_box.options.length; i++) {
+                var opt = to_box.options[i];
+                if (opt.selected) {
+                    var insOption = new Option(opt.text, opt.value);
+                    to_box.remove(i);
+                    from_box.options.add(insOption);
+                    i--;
+                }
+            }
+        }
+
     form(name="form", method="post", action="/web/send")
+        label(for='db') User Select
+        br
+        select(id="from", multiple size="10", style="width:200px")
+
+        &nbsp&nbsp&nbsp&nbsp&nbsp
+        input(type="button", name="select", value="▶", style="width:50px; height:50px", onClick="selectitem(from, to)")
+        &nbsp&nbsp&nbsp&nbsp&nbsp
+        input(type="button", name="remove", value="◀", style="width:50px; height:50px", onClick="removeitem(from, to)")
+        &nbsp&nbsp&nbsp&nbsp&nbsp
+
+        select(id="to", name="to", multiple size="10", style="width:200px")
 
         br
-        label(for='name') Name
         br
-        textarea(rows="6", cols="30", id="name", name="name")
-        br
-        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+        label(for='message') Input Message
 
         br
-        label(for='message') Message
+        textarea(rows="6", cols="77", id="message", name="message")
+
         br
-        textarea(rows="6", cols="30", id="message", name="message")
         br
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-        input(type="submit", name="", value="전송")
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+        &nbsp&nbsp&nbsp&nbsp
+        input(type="submit", name="", style="width:50px; height:50px", value="전송")
