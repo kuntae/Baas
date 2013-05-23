@@ -21,5 +21,5 @@ a {
 .sidemenu li a:hover{color:#ff3334;}
 
 
-.aside{float: left;width: 250px;height: auto;border-right:#7c7c7a solid 1px;}
-.cont{position: relative;top:0px;left:10px}
+.aside{float: left;width: 250px;height: auto;border-right:#7c7c7a solid 1px;border-left:#7c7c7a solid 1px;}
+.cont{float: left; width:750px;text-align:center;height: auto; border-right:#7c7c7a solid 1px;}

@@ -1,0 +1,51 @@
+//
+   Created with JetBrains WebStorm.
+   User: root
+   Date: 13. 5. 23
+   Time: 오후 10:11
+   To change this template use File | Settings | File Templates.
+
+
+extends menu_layout
+
+block content
+    script(type='text/javascript')
+        function addRow(tableid,id,mail,device){
+            var table = document.getElementById(tableid);
+            var rowlen = table.rows.length;
+            var row = table.insertRow(rowlen);
+            row.insertCell(0).innerHTML = id;
+            row.insertCell(1).innerHTML = mail;
+            row.insertCell(2).innerHTML = device;
+
+        }
+        function generate(count){
+            var i;
+            var idArray = new Array(#{idArray});
+            var mailArray = new Array(#{mailArray});
+            var deviceArray = new Array(#{deviceArray});
+            for(i=0; i<count; i++){
+                 addRow('table',idArray[i],mailArray[i],deviceArray[i]);
+            }
+        }
+
+    h1= title
+    div.aside
+        div.sidemenu
+            ul
+                li
+                    a(href='/web/datatree/user') User Collection
+                li
+                    a(href='/web/datatree/location') Location Collection
+                li
+                    a(href='/web/datatree/rank') Rank Conllection
+                li
+                    a(href='/web/datatree/push') Push Collection
+    div.cont
+        table(id='table',width='600',border=1)
+            tr
+                th User ID
+                th E-Mail
+                th Device ID
+    script
+        generate('#{countValue}');
