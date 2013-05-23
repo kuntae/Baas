@@ -13,3 +13,13 @@ a {
 .menu li a {padding:13px 13px 13px 13px; color: #000000; border-right:#7c7c7a solid 1px; text-decoration:none;}
 .menu li a:hover{color:#ff3334;}
 .menu img {width: 120px;}
+
+.sidemenu {width:100%; overflow:hidden;}
+.sidemenu ul {text-align: left; padding:0; margin:0}
+.sidemenu li {display: compact; list-style:none; font-size:20px;width:200px;text-transform:none}
+.sidemenu li a {padding:10px 10px 10px 10px; color: #000000; width:150px; text-decoration:none;}
+.sidemenu li a:hover{color:#ff3334;}
+
+
+.aside{float: left;width: 250px;height: auto;border-right:#7c7c7a solid 1px;}
+.cont{position: relative;top:0px;left:10px}
