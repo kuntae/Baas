@@ -20,7 +20,9 @@ var express = require('express')
   , datatree = require('./routes/web/datatree')
   , developer_management = require('./routes/web/developer_management')
   //===============================mobile page routing javascript=================================
-  , rank = require('./routes/mobile/rank');
+  , rank = require('./routes/mobile/rank')
+  , user = require('./routes/mobile/user')
+  , location = require('./routes/mobile/location');
 
 var app = express();
 
@@ -69,7 +71,11 @@ app.post('/web/send', push_management.send_push);
 app.post('/web/addpoi', location_management.addpoi);
 app.post('/web/removepoi', location_management.removepoi);
 //================================mobile page=======================================
-app.get('/mobile/rank',rank.into);
+app.get('/mobile/rank',rank.into)
+app.get('/mobile/user_regist_deviceid', user.user_regist_deviceid)
+app.get('/mobile/user_regist_all', user.user_regist_all)
+app.get('/mobile/get_user_info', user.get_user_info);
+app.get('/mobile/get_location', location.get_location);'
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
