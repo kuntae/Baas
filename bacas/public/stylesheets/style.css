@@ -7,10 +7,12 @@ a {
   color: #00B7FF;
 }
 
-.menu {width:100%; overflow:hidden;}
-.menu ul {text-align: left; padding:0; margin:0}
-.menu li {display: inline; list-style:none; font-size:20px; text-transform:uppercase}
-.menu li a {padding:13px 13px 13px 13px; color: #000000; border-right:#7c7c7a solid 1px; text-decoration:none;}
+.header{width:100%; height:148px; border-bottom:#232320 solid 6px; background:url(/images/bg_header.png) repeat; overflow:hidden}
+
+.menu {width:990px; height:52px; z-index:999; margin:0 auto;-moz-border-radius:8px 8px 0 0;-webkit-border-radius:8px 8px 0 0;-khtml-border-radius:8px 8px 0 0;border-radius:8px 8px 0 0; background:#232320;}
+.menu ul {text-align: left; padding:20px 0; margin:10}
+.menu li {display: inline; list-style:none; font-size:20px; font-weight:bold; text-transform:uppercase}
+.menu li a {padding:12px 30px 12px 30px; color: #ffffff; border-right:#7c7c7a solid 2px; text-decoration:none;}
 .menu li a:hover{color:#ff3334;}
 .menu img {width: 120px;}
 

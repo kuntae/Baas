@@ -4,24 +4,24 @@ html
         title BacaS
         link(rel='stylesheet', href='/stylesheets/style.css')
     body
-        .menu
-            ul
-                li.first
-                    img(src='/images/baas.png')
-                li
-                    a(href='/web/user_management') 사용자 정보
-                li
-                    a(href='/web/push_management') 알림
-                li
-                    a(href='/web/location_management') 지역정보
-                li
-                    a(href='/web/file_management') 파일
-                li
-                    a(href='/web/rank_management') 랭킹
-                li
-                    a(href='/web/datatree') DB
-                li
-                    a(href='/web/developer_management') 정보 수정
-                li.last
-                    a(href='/web/sdk') SDK
+        .header
+            img(src='/images/baas.png', width=250, height=80)
+            .menu
+                ul
+                    li
+                        a(href='/web/user_management') 사용자 정보
+                    li
+                        a(href='/web/push_management') 알림
+                    li
+                        a(href='/web/location_management') 지역정보
+                    li
+                        a(href='/web/file_management') 파일
+                    li
+                        a(href='/web/rank_management') 랭킹
+                    li
+                        a(href='/web/datatree') DB
+                    li
+                        a(href='/web/developer_management') 정보 수정
+                    li.last
+                        a(href='/web/sdk') SDK
         block content
