@@ -20,8 +20,8 @@ o.out = {replace: 'sorts'}
 o.verbose = true;
 
 var getdate = function(i){
-   // var settingDate = new Date();
-    //settingDate.setDate(settingDate.getDate()-6+i); //i¿œ ¿¸
+    // var settingDate = new Date();
+    //settingDate.setDate(settingDate.getDate()-6+i); //iÏùº Ï†Ñ
 
     var settingDate =new Date();
     settingDate.setDate(settingDate.getDate()-6+i);
@@ -80,19 +80,19 @@ exports.rank_page= function (req, res) {
                 function_cnt[i] =  result[i].value.count;
             }
             console.log(function_name.length);
-                db.rankinfo.mapReduce(p, function(err2, model2, stats2){
-                    try{
-                        // console.log('map reduce took %d ms', stats.processtime);
-                        model2.find({}).sort({'value':-1}).exec( function(err2, result2){
-                            for(i=0;i<result2.length;i++){
-                                console.log(result2[i]._id);
-                                console.log(result2[i].value.count);
-                            }
-                        });
-                    }catch(err2){
-                        console.log('not data');
-                    }
-                });
+            db.rankinfo.mapReduce(p, function(err2, model2, stats2){
+                try{
+                    // console.log('map reduce took %d ms', stats.processtime);
+                    model2.find({}).sort({'value':-1}).exec( function(err2, result2){
+                        for(i=0;i<result2.length;i++){
+                            console.log(result2[i]._id);
+                            console.log(result2[i].value.count);
+                        }
+                    });
+                }catch(err2){
+                    console.log('not data');
+                }
+            });
             res.render('rank_page', {
                 title: 'rank_page',
                 r1:function_name[0],

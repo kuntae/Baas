@@ -4,19 +4,18 @@ block content
     script(type='text/javascript')
 
     h1= title
-    div.aside
-        div.sidemenu
-            ul
-                li
-                    a(href='/web/datatree/user') User Collection
-                li
-                    a(href='/web/datatree/location') Location Collection
-                li
-                    a(href='/web/datatree/rank') Rank Conllection
-                li
-                    a(href='/web/datatree/push') Push Collection
-    div.cont
-        table(id='table',width='600',border=1)
+
+    ul(id='sub',class='sf-menu')
+        li
+            a(href='/web/datatree/user') User Collection
+        li
+            a(href='/web/datatree/location') Location Collection
+        li
+            a(href='/web/datatree/rank') Rank Conllection
+        li
+            a(href='/web/datatree/push') Push Collection
+
+    table(id='table',width='600',border=1)
             tr
                 th(align="center") Used Function
                 th(align="center") Count

@@ -75,7 +75,7 @@ app.get('/mobile/rank',rank.into)
 app.get('/mobile/user_regist_deviceid', user.user_regist_deviceid)
 app.get('/mobile/user_regist_all', user.user_regist_all)
 app.get('/mobile/get_user_info', user.get_user_info);
-app.get('/mobile/get_location', location.get_location);'
+app.get('/mobile/get_location', location.get_location);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

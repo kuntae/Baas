@@ -3,11 +3,12 @@ html
     head
         title BacaS
         link(rel='stylesheet', href='/stylesheets/style.css')
-    body
-        .header
-            img(src='/images/baas.png', width=250, height=80)
-            .menu
-                ul
+    body(class='home')
+        div(id='wrapper')
+            div(id='header')
+                a(href='/web/user_management')
+                    img(id='logo',src='/images/baas.png', width=250, height=80)
+                ul(id='nav',class='sf-menu')
                     li
                         a(href='/web/user_management') 사용자 정보
                     li
@@ -22,6 +23,11 @@ html
                         a(href='/web/datatree') DB
                     li
                         a(href='/web/developer_management') 정보 수정
-                    li.last
+                    li
                         a(href='/web/sdk') SDK
-        block content
+            div(id='main')
+                div(id='content')
+                    block content
+            div(id='footer')
+                div(id='bottom')
+                    p Hansung university. Computer Engineering Department 2013 Projec 바스 team

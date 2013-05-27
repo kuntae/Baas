@@ -32,8 +32,8 @@ block content
             var three_bar = new bar_outline( 75, '0x533990', '0x533990');
 
             total_bar.key( 'Total', 10 );
-            one_bar.key( '#{r1}', 10 );
-            two_bar.key( '#{r2}', 10 );
+            one_bar.key('#{r1}', 10 );
+            two_bar.key('#{r2}', 10 );
             three_bar.key( '#{r3}', 10 );
 
             //for(var i=0; i<10; i++ ) {
@@ -130,18 +130,51 @@ block content
             g.render( 'pie_graph' );
         }
 
+        function visibleBar(){
+            if(document.getElementById('bar_graph').style.display=="none")
+                document.getElementById('bar_graph').style.display="block";
+            else if(document.getElementById('bar_graph').style.display=="block")
+                document.getElementById('bar_graph').style.display="none";
+        }
+
+        function visibleLine(){
+            if(document.getElementById('line_graph').style.display=="none")
+                document.getElementById('line_graph').style.display="block";
+            else if(document.getElementById('line_graph').style.display=="block")
+                document.getElementById('line_graph').style.display="none";
+        }
+
+        function visiblePie(){
+            if(document.getElementById('pie_graph').style.display=="none")
+                document.getElementById('pie_graph').style.display="block";
+            else if(document.getElementById('pie_graph').style.display=="block")
+                document.getElementById('pie_graph').style.display="none";
+        }
 
 
     h1= title
-    //input(type='button', onclick="javascript:bar_graph()")
-    #bar_graph
-    br
-    br
-    #line_graph
-    br
-    br
-    #pie_graph
 
+
+    table(id='table', width='600')
+        tr
+            th(align="center") Used Function
+            th(align="center") Count
+        tr
+            td(align="center") #{r1}
+            td(align="center") #{r1_p}
+        tr
+            td(align="center") #{r2}
+            td(align="center") #{r2_p}
+        tr
+            td(align="center") #{r3}
+            td(align="center") #{r3_p}
+
+    input(type='button',value='막대그래프',align="center", onClick="visibleBar()")
+    input(type='button',value='꺽은선그래프', onClick="visibleLine()")
+    input(type='button',value='원그래프', onClick="visiblePie()")
+
+    div#bar_graph(style="display:none")
+    div#line_graph(style="display:none")
+    div#pie_graph(style="display:none")
     script(type='text/javascript')
         bar_graph(); line_graph(); pie_graph();
-
