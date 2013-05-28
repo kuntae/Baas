@@ -42,8 +42,8 @@ block content
             two_bar.data.push(#{r2_p});
             three_bar.data.push(#{r3_p});
             x_axis[0] = "function1";
-            //x_axis[1] = "x값";
-            //x_axis[2] = "x값";
+            //x_axis[1] = "function2";
+            //x_axis[2] = "function3";
             //}
             var g= new graph(660, 250);							// 그래프 크기
 
@@ -72,13 +72,21 @@ block content
 
         // 꺽은선 그래프
         function line_graph() {
+            var d_cnt = new Array(#{d_cnt});
             var tDatePageCount = new Array();
-            var max = 100;
+            var max=0;
             var date = new Array();
 
             for(var i=0;i<7;i++) {
-                tDatePageCount[i] = i*9;
+                if(max<d_cnt[i]){
+                    max=d_cnt[i];
+                }
+                tDatePageCount[i] = d_cnt[i];
             }
+            max=parseInt(max/10);
+
+            max*=10;
+            max+=10;
 
             for(var i=0;i<7;i++) {
                 date[i] = getdate(i);
@@ -169,9 +177,14 @@ block content
             td(align="center") #{r3}
             td(align="center") #{r3_p}
 
-    input(type='button',value='막대그래프',align="center", onClick="visibleBar()")
-    input(type='button',value='꺽은선그래프', onClick="visibleLine()")
-    input(type='button',value='원그래프', onClick="visiblePie()")
+    ul(id='ranknav',class='sf-menu')
+        li
+            a(href='javascript:visibleBar()') 막대그래프
+        li
+            a(href='javascript:visibleLine()') 꺽은선그래프
+        li
+            a(href='javascript:visiblePie()') 원그래프
+
 
     div#bar_graph(style="display:none")
     div#line_graph(style="display:none")

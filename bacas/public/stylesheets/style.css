@@ -269,7 +269,82 @@ h6{ font-size: 20px; }
     border: 0px;
     background: url(../img/search-submit.png) no-repeat  transparent -3px 2px;
 }
+/************************************************************************************/
+#ranknav{
+    height: 46px;
+    width: 966px;
 
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+#ranknav>li{
+    display: block;
+    float: left;
+    margin-left: 5px;
+    margin-top: 12px;
+}
+
+#ranknav>li:first-child{
+    margin-left: 10px;
+}
+
+#ranknav>li>a{
+    display: block;
+    font-size: 12px;
+    color: #363636;
+    text-decoration: none;
+    padding: 7px 10px 6px 10px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+
+    text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+}
+
+#ranknav>li>a:hover,
+#ranknav>li.current-menu-item>a{
+    color: #fff;
+    background: #363636;
+    text-shadow: none;
+}
+
+/* sub navigation */
+
+#ranknav>li ul{
+    display: block;
+    margin-top: -1px;
+    border-radius: 0px 0px 10px 10px;
+    -moz-border-radius: 0px 0px 10px 10px;
+    -webkit-border-radius: 0px 0px 10px 10px;
+}
+
+#ranknav>li>ul ul{
+    margin-top: 0px;
+    border-radius: 0px 10px 10px 10px;
+    -moz-border-radius: 0px 10px 10px 10px;
+    -webkit-border-radius: 0px 10px 10px 10px;
+}
+
+#ranknav>li ul li a{
+    display: block;
+    padding: 10px 15px;
+    display: block;
+    font-size: 12px;
+    color: #363636;
+    text-decoration: none;
+}
+
+#ranknav>li ul li a:hover{
+    background: #363636;
+    color: #fff;
+}
+
+#ranknav>li ul li:last-child a:hover{ /* last item its rounded at bottom */
+    border-radius: 0px 0px 10px 10px;
+    -moz-border-radius: 0px 0px 10px 10px;
+    -webkit-border-radius: 0px 0px 10px 10px;
+}
 /* NAVIGATION --------------------------------------------------------*/
 #sub{
     height: 46px;
