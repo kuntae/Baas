@@ -30,11 +30,11 @@ block content
         }
         function generate(count){
             var i;
-            var idArray = new Array(#{idArray});
-            var mailArray = new Array(#{mailArray});
-            var deviceArray = new Array(#{deviceArray});
+            var usedfunction = new Array(#{usedfunction});
+            var date = new Array(#{date});
+            var user_id = new Array(#{user_id});
             for(i=0; i<count; i++){
-                 addRow('table',idArray[i],mailArray[i],deviceArray[i]);
+                 addRow('table',usedfunction[i],date[i],user_id[i]);
             }
         }
 
@@ -52,8 +52,8 @@ block content
 
     table(id='table',width='600',border=1)
         tr
+            th Used Function
+            th Date
             th User ID
-            th E-Mail
-            th Device ID
     script
         generate('#{countValue}');

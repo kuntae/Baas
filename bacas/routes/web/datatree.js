@@ -25,23 +25,23 @@ exports.datatree_user=function(req,res){
 }
 exports.datatree_rank=function(req,res){
     console.log("data tree of rank");
-    var idArray =[];
-    var mailArray=[];
-    var deviceArray=[];
+    var usedfunction =[];
+    var date=[];
+    var user_id=[];
     var countValue;
-    db.userinfo.find({},function(err,doc){
+    db.rankinfo.find({},function(err,doc){
         countValue = doc.length;
         for(var i=0;i<doc.length;i++){
-            idArray.push('\''+doc[i].id+'\'');
-            mailArray.push('\''+doc[i].mail+'\'');
-            deviceArray.push('\''+doc[i].deviceid+'\'');
+            usedfunction.push('\''+doc[i].used_function+'\'');
+            date.push('\''+doc[i].date+'\'');
+            user_id.push('\''+doc[i].user_id+'\'');
         }
 
         res.render('datatree_page_rank', {
             title: 'datatree page',
-            idArray: idArray,
-            mailArray:mailArray,
-            deviceArray:deviceArray,
+            usedfunction: usedfunction,
+            date:date,
+            user_id:user_id,
             countValue: countValue
         });
     });

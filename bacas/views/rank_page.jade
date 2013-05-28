@@ -25,7 +25,9 @@ block content
         function bar_graph() {
             var x_axis = new Array();
             var max = #{r1_p};                                          // y의 최대 값을 지정
-
+            max=parseInt(max/10);
+            max*=10;
+            max+=10;
             var total_bar = new bar_outline( 75, '0x000000', '0x000000');
             var one_bar = new bar_outline( 75, '0x3B5998', '0x3B5998');
             var two_bar = new bar_outline( 75, '0x00ACEE', '0x00ACEE');
@@ -41,11 +43,11 @@ block content
             one_bar.data.push(#{r1_p});
             two_bar.data.push(#{r2_p});
             three_bar.data.push(#{r3_p});
-            x_axis[0] = "function1";
-            //x_axis[1] = "function2";
-            //x_axis[2] = "function3";
+            x_axis[0] = 'used_function';
+           // x_axis[1] = '#{r2}';
+            //x_axis[2] = '#{r3}';
             //}
-            var g= new graph(660, 250);							// 그래프 크기
+            var g= new graph(660, 500);							// 그래프 크기
 
             g.set_bg_colour( '#FFFFFF' );						// 배경색 지정
             g.set_inner_background( '#FFFFFF' );				// 안쪽 배경색 지정
@@ -61,7 +63,7 @@ block content
             g.x_axis_colour( '#909090', '#FFFFFF' );			// 가로 줄 설정(맨 밑 색, 그 위에 색)
             g.y_axis_colour( '#909090', '#ADB5C7' );			// 세로 줄 설정(맨 밑 색, 그 위의 색)
 
-            g.set_x_labels( x_axis );						// x 표시 글
+            g.set_x_labels( x_axis);						// x 표시 글
             g.set_x_label_style( 12, '0x000000', 0, 1 );		// 글의 스타일(폰트 크기, 색, 기울임, 표시 주기)
 
             g.set_y_max( max );									// y 표시의 최대값
@@ -84,7 +86,6 @@ block content
                 tDatePageCount[i] = d_cnt[i];
             }
             max=parseInt(max/10);
-
             max*=10;
             max+=10;
 
@@ -92,7 +93,7 @@ block content
                 date[i] = getdate(i);
             }
 
-            var g= new graph(660, 300);						// 그래프 크기
+            var g= new graph(660, 500);						// 그래프 크기
 
             g.set_bg_colour( '#FFFFFF' );						// 배경색 지정
             g.set_inner_background( '#FFFFFF' );				// 안쪽 배경색 지정
@@ -102,7 +103,7 @@ block content
 
             g.set_data( tDatePageCount );								// 데이터 넣기
 
-            g.line_hollow( 2, 4, '0x000000', 'PageView', 10 );		// 선 그리기(선 두께, 점의 크기, 색, 위에 표시될 글, 글의 폰트 크기)
+            g.line_hollow( 2, 4, '0xFF0000', 'PageView', 10 );		// 선 그리기(선 두께, 점의 크기, 색, 위에 표시될 글, 글의 폰트 크기)
 
             g.x_axis_colour( '#909090', '#FFFFFF' );			// 가로 줄 설정(맨 밑 색, 그 위에 색)
             g.y_axis_colour( '#909090', '#ADB5C7' );			// 세로 줄 설정(맨 밑 색, 그 위의 색)
@@ -125,7 +126,7 @@ block content
             data.push(#{r2_p});
             data.push(#{r3_p});
 
-            var g = new graph(600, 400);                        // 그래프 크기
+            var g = new graph(600, 500);                        // 그래프 크기
             g.set_bg_colour( '#FFFFFF' );						// 배경색 지정
 
             g.pie(60, '#FFFFFF', '{font-size: 12px; color: #404040; }', false, 1);
@@ -139,6 +140,8 @@ block content
         }
 
         function visibleBar(){
+            document.getElementById('line_graph').style.display="none";
+            document.getElementById('pie_graph').style.display="none";
             if(document.getElementById('bar_graph').style.display=="none")
                 document.getElementById('bar_graph').style.display="block";
             else if(document.getElementById('bar_graph').style.display=="block")
@@ -146,6 +149,8 @@ block content
         }
 
         function visibleLine(){
+            document.getElementById('bar_graph').style.display="none";
+            document.getElementById('pie_graph').style.display="none";
             if(document.getElementById('line_graph').style.display=="none")
                 document.getElementById('line_graph').style.display="block";
             else if(document.getElementById('line_graph').style.display=="block")
@@ -153,6 +158,8 @@ block content
         }
 
         function visiblePie(){
+            document.getElementById('line_graph').style.display="none";
+            document.getElementById('bar_graph').style.display="none";
             if(document.getElementById('pie_graph').style.display=="none")
                 document.getElementById('pie_graph').style.display="block";
             else if(document.getElementById('pie_graph').style.display=="block")
