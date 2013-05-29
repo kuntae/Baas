@@ -28,11 +28,11 @@ block content
         }
         function generate(count){
             var i;
-            var idArray = new Array(#{idArray});
-            var mailArray = new Array(#{mailArray});
-            var deviceArray = new Array(#{deviceArray});
+            var latArray = new Array(#{latArray});
+            var lngArray = new Array(#{lngArray});
+            var addressArray = new Array(#{addressArray});
             for(i=0; i<count; i++){
-                 addRow('table',idArray[i],mailArray[i],deviceArray[i]);
+                 addRow('table',latArray[i],lngArray[i],addressArray[i]);
             }
         }
 
@@ -47,10 +47,10 @@ block content
         li
             a(href='/web/datatree/push') Push Collection
 
-    table(id='table',width='600',border=1)
+    table(id='table')
         tr
-            th User ID
-            th E-Mail
-            th Device ID
+            th latitude
+            th longitude
+            th Address
     script
         generate('#{countValue}');

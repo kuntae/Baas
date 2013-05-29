@@ -47,23 +47,23 @@ exports.datatree_rank=function(req,res){
     });
 }
 exports.datatree_location=function(req,res){
-    var idArray =[];
-    var mailArray=[];
-    var deviceArray=[];
+    var latArray =[];
+    var lngArray=[];
+    var addressArray=[];
     var countValue;
-    db.userinfo.find({},function(err,doc){
+    db.poiinfo.find({},function(err,doc){
         countValue = doc.length;
         for(var i=0;i<doc.length;i++){
-            idArray.push('\''+doc[i].id+'\'');
-            mailArray.push('\''+doc[i].mail+'\'');
-            deviceArray.push('\''+doc[i].deviceid+'\'');
+            latArray.push('\''+doc[i].lat+'\'');
+            lngArray.push('\''+doc[i].lng+'\'');
+            addressArray.push('\''+doc[i].address+'\'');
         }
 
         res.render('datatree_page_location', {
             title: 'datatree page',
-            idArray: idArray,
-            mailArray:mailArray,
-            deviceArray:deviceArray,
+            latArray: latArray,
+            lngArray:lngArray,
+            addressArray:addressArray,
             countValue: countValue
         });
     });
