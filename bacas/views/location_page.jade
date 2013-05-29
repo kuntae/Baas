@@ -6,22 +6,26 @@ block content
     script(type='text/javascript', src="http://maps.google.com/maps/api/js?sensor=false")
     script(type='text/javascript')
         $(document).ready(function() {
-
             function addRow(tableid, lat, lng, address) {
                 var table = document.getElementById(tableid);
                 var rowlen = table.rows.length;
                 var row = table.insertRow(rowlen);
+                var chbx = document.createElement("input");
+                chbx.setAttribute("type", "checkbox");
+                chbx.setAttribute("id", "check");
+                chbx.setAttribute("name", "check");
+
                 row.insertCell(0).innerHTML = lat;
                 row.insertCell(1).innerHTML = lng;
                 row.insertCell(2).innerHTML = address;
+                row.insertCell(3).appendChild(chbx);
             }
 
             var lat = new Array(#{lat});
             var lng = new Array(#{lng});
             var address = new Array(#{address});
-
-            for(var i = 0; i < lat.length; i++)
-                addRow('table', lat[i], lng[i], address[i]);
+            var mark = new Array();
+            var ll = new Array();
 
             var latlng = new google.maps.LatLng(37.5640, 126.9751);
             var myOptions = {
@@ -34,6 +38,16 @@ block content
                     position : latlng,
                     map : map
             });
+            marker.setMap(null);
+
+            for(var i = 0; i < lat.length; i++) {
+                addRow('table', lat[i], lng[i], address[i]);
+                ll[i] = new google.maps.LatLng(lat[i], lng[i]);
+                mark[i] = new google.maps.Marker({
+                    position : ll[i],
+                    map : map
+                });
+            }
 
             var geocoder = new google.maps.Geocoder();
 
@@ -43,7 +57,7 @@ block content
                            'latLng' : location
                    },
                    function(results, status) {
-                        if (status == google.maps.GeocoderStatus.OK) {
+                        if(status == google.maps.GeocoderStatus.OK) {
                             var lat = document.getElementById('lat');
                             var lng = document.getElementById('lng');
                             var address = document.getElementById('address');
@@ -56,7 +70,7 @@ block content
                             alert("Geocoder failed due to :" + status);
                         }
             });
-            if (!marker) {
+            if(!marker) {
                    marker = new google.maps.Marker({
                        position : location,
                        map : map
@@ -72,10 +86,52 @@ block content
             map.setCenter(location);
             });
         });
-    form(name="form", method="post", action="/web/addpoi")
-        br
-        br
 
+        function addpoi() {
+                var form = document.form;
+                form.action = "/web/addpoi";
+                form.method = "post";
+                form.submit();
+            }
+
+        function removepoi(chbox) {
+            var form = document.createElement("form");
+            var checkedbox = new Array();
+            var tlat = new Array(#{lat});
+
+            for(var i = 0, j = 0; i < chbox.length; i++) {
+                if(chbox[i].checked == true) {
+                    var hiddenField = document.createElement("input");
+                    hiddenField.setAttribute("type", "hidden");
+                    hiddenField.setAttribute("name", "remove");
+                    hiddenField.setAttribute("value", tlat[i]);
+                    form.appendChild(hiddenField);
+                }
+            }
+
+            form.action = "/web/removepoi";
+            form.method = "post";
+            form.submit();
+        }
+
+        function checkAlll(checkbox) {
+            var checkAll = document.getElementById('checkAll');
+
+            if(checkAll.checked == true) {
+                for(var i = 0; i < checkbox.length; i++) {
+                    checkbox[i].checked = true;
+                }
+            }
+            else {
+                for(var i = 0; i < checkbox.length; i++) {
+                    checkbox[i].checked = false;
+                }
+            }
+        }
+
+    form(name="form")
+        br
+        br
         table(border="1")
             tr
                 td(colspan="2")
@@ -92,16 +148,14 @@ block content
                 th 주소
                 td
                     input(id="address", name="address", value="", size="53")
-
         br
-
-        input(type="submit", name="add", value="추가", style="width:50px; height:50px")
-
-        form(name="form", method="post", action="/web/removepoi")
-            input(type="submit", name="remove", value="삭제", style="width:50px; height:50px")
+        input(type="button", name="add", value="추가", style="width:50px; height:50px", onClick="addpoi()")
+        input(type="button", name="remove", value="삭제", style="width:50px; height:50px", onClick="removepoi(this.form.check)")
         br
         table(id ="table", width="600", border="1")
             tr
                 th(align="center") 위도
                 th(align="center") 경도
                 th(align="center") 주소
+                th
+                    input(type="checkbox", name="checkAll", value="checkAll", id="checkAll", onclick="checkAlll(this.form.check)")

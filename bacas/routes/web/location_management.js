@@ -1,6 +1,6 @@
 var db = require('./../db_structure');     // db_structure를 불러온다
 
-exports.location_page= function (req, res) {
+exports.location_page = function(req, res) {
     db.poiinfo.find({}, function(err, doc) {
         var lat = []; // 위도
         var lng = []; // 경도
@@ -34,7 +34,7 @@ exports.location_page= function (req, res) {
     });
 }
 
-exports.addpoi= function (req, res) {
+exports.addpoi= function(req, res) {
     var instance = new db.poiinfo();
 
     instance.lat = req.body.lat;
@@ -51,8 +51,23 @@ exports.addpoi= function (req, res) {
     });
 }
 
-exports.removepoi= function (req, res) {
-    db.poiinfo.remove({lat : req.body.lat}, function(err) {
+exports.removepoi= function(req, res) {
+    console.log(req.body.remove);
+
+    if (req.body.remove.length > 1) {
+        for (var i = 0; i < req.body.remove.length; i++) {
+            db.poiinfo.remove({lat : req.body.remove[i]}, function(err) {
+                try {
+                    res.redirect('/web/location_management');
+                }
+                catch (err) {
+                    console.log(err);
+                }
+            });
+        }
+    }
+
+    db.poiinfo.remove({lat : req.body.remove}, function(err) {
         try {
             res.redirect('/web/location_management');
         }

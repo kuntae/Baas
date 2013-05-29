@@ -1,6 +1,7 @@
 var regid; // regId 임시 저장 변수
 var r;
 var db = require('./../db_structure');     // db_structure를 불러온다
+var count;
 
 exports.push_page= function (req, res) {
     db.deviceinfo.find({}, function(err, doc) {
@@ -30,16 +31,38 @@ exports.push_page= function (req, res) {
 
 exports.regist = function(req, res) { // Device ID 등록하기
     var device = new db.deviceinfo();
+    var cnt = 0;
 
     console.log(req.param('regId'));
     regid = req.param('regId'); // regId 가져오기
-    device.device_id = regid;
 
-    device.save(function(err){
-        try{
-            res.render('push_management',{title:"push_management"});
-        }catch (err){
-            console.log('SAVE ERROR');
+    db.deviceinfo.find({}, function(err, doc) {
+        try {
+            var i = 0;
+            while (doc[i] != null) {
+                i++;
+            }
+            cnt = i + 1;
+        }catch(err) {
+            console.log(err);
+        }
+    });
+
+    db.deviceinfo.findOne({device_id:regid}, function(err, doc) {
+        if(doc == null) {
+            device.name = 'new' + cnt;
+            device.device_id = regid;
+
+            device.save(function(err) {
+                try{
+                    res.render('push_management',{title:"push_management"});
+                }catch (err){
+                    console.log('SAVE ERROR');
+                }
+            });
+        }
+        else {
+            console.log('Already Exist');
         }
     });
     res.end();
@@ -95,7 +118,7 @@ exports.send_push = function(req, res) {
                 console.log(result);
 
             });
-            console.log(r);
+            console.log(r);                   n
         } catch (err) {
             console.log(err);
         }
