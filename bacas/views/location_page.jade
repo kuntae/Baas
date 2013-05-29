@@ -11,9 +11,41 @@ block content
                 var rowlen = table.rows.length;
                 var row = table.insertRow(rowlen);
                 var chbx = document.createElement("input");
+                var chchAll = document.form.checkAll;
+
                 chbx.setAttribute("type", "checkbox");
                 chbx.setAttribute("id", "check");
                 chbx.setAttribute("name", "check");
+
+                chchAll.onclick = function() {
+                    var chch = document.form.check;
+
+                    if(checkAll.checked == true) {
+                        for(var i = 0; i < lat.length; i++) {
+                            chch[i].checked = true;
+                            mark[i].setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+                        }
+                    }
+                    else {
+                        for(var i = 0; i < lat.length; i++) {
+                            chch[i].checked = false;
+                            mark[i].setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+                        }
+                    }
+                }
+
+                chbx.onclick = function a() {
+                    var chch = document.form.check;
+
+                    for(var i = 0; i < lat.length; i++) {
+                        if(chch[i].checked == true) {
+                            mark[i].setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+                        }
+                        else {
+                            mark[i].setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+                        }
+                    }
+                }
 
                 row.insertCell(0).innerHTML = lat;
                 row.insertCell(1).innerHTML = lng;
@@ -47,6 +79,7 @@ block content
                     position : ll[i],
                     map : map
                 });
+                mark[i].setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
             }
 
             var geocoder = new google.maps.Geocoder();
@@ -75,6 +108,7 @@ block content
                        position : location,
                        map : map
                        });
+                   marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
             }
             else {
                    marker.setMap(null);
@@ -82,6 +116,7 @@ block content
                        position : location,
                        map : map
                    });
+                   marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
             }
             map.setCenter(location);
             });
@@ -114,21 +149,6 @@ block content
             form.submit();
         }
 
-        function checkAlll(checkbox) {
-            var checkAll = document.getElementById('checkAll');
-
-            if(checkAll.checked == true) {
-                for(var i = 0; i < checkbox.length; i++) {
-                    checkbox[i].checked = true;
-                }
-            }
-            else {
-                for(var i = 0; i < checkbox.length; i++) {
-                    checkbox[i].checked = false;
-                }
-            }
-        }
-
     form(name="form")
         br
         br
@@ -158,4 +178,4 @@ block content
                 th(align="center") 경도
                 th(align="center") 주소
                 th
-                    input(type="checkbox", name="checkAll", value="checkAll", id="checkAll", onclick="checkAlll(this.form.check)")
+                    input(type="checkbox", name="checkAll", value="checkAll", id="checkAll")
