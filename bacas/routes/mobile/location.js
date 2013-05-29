@@ -14,11 +14,20 @@ var url_module = require('url');            // url 모듈을 불러온다.
 exports.get_location= function (req, res) {
     console.log(file_name +  "get location page");
 
-    db.poiinfo.find({},function(err,doc){
-        console.log(file_name + ' ' +doc);
+    var query = url_module.parse(req.url, true).query;
+    var lat = query["lat"];
+    var lng = query["lng"];
 
-        res.render('mobile_get_data', {
-            mobile_data: '[' + doc + ']'
+    console.log('lat=' + lat + ' lng=' + lng)
+
+    db.poiinfo.find({})
+        .where('lng').gt(parseFloat(lng)-0.002).lt(parseFloat(lng)+0.002)
+        .where('lat').gt(parseFloat(lat)-0.014).lt(parseFloat(lat)+0.014)
+        .exec(function(err,doc){
+            console.log(file_name + ' ' +doc);
+
+            res.render('mobile_get_data', {
+                mobile_data: '[' + doc + ']'
+            });
         });
-    });
 }
