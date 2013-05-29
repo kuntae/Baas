@@ -55,17 +55,21 @@ exports.rank_page= function (req, res) {
     var function_cnt = new Array(3);
     var d_cnt = [];
     var date;
-
-    for(i=0; i<3; i++){
+    var flag;
+    for(var i=0; i<3; i++){
         function_name[i] = "empty";
         function_cnt[i] = 0;
     }
+
+    for(i=0;i<7;i++)
+        d_cnt[i] = 0;
+
     console.log("rank page");
 
     db.rankinfo.mapReduce(o, function(err, model, stats){
         console.log('map reduce took %d ms', stats.processtime);
         model.find({}).sort({'value':-1}).limit(3).exec( function(err, result){
-            for(var i=0; i<result.length;i++){
+            for(i=0; i<result.length;i++){
                 console.log('rank %d = %s : %d',i+1, result[i]._id, result[i].value.count);
                 function_name[i] = result[i]._id;
                 function_cnt[i] =  result[i].value.count;
@@ -79,13 +83,13 @@ exports.rank_page= function (req, res) {
                             for(var j=0;j<7;j++){
                                 date = getdate(j);
                                 if(date==result2[i]._id){
-                                    d_cnt.push(result2[i].value.count);
-                                    console.log(d_cnt[i]);
-                                    console.log(result2[i]._id);
-                                    console.log(result2[i].value.count);
+                                    flag = true;
+                                    break;
                                 }else
-                                    d_cnt.push(0);
+                                    flag=false;
                             }
+                            if(flag)
+                                d_cnt[j] = result2[i].value.count;
                         }
 
                         res.render('rank_page', {
