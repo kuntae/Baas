@@ -3,29 +3,44 @@ var r;
 var db = require('./../db_structure');     // db_structure를 불러온다
 var count;
 
+// 로그인 체크 함수
+function restrict(req, res, next) {
+    if (req.session.user) {
+        next();
+    } else {
+        req.session.error = 'Access denied!';
+        res.redirect('/login');
+    }
+}
+
 exports.push_page= function (req, res) {
-    db.userinfo.find({}, function(err, doc) {
-        var user_names = exports.user_names = [];
+    console.log("push page");
 
-        try {
-            var i = 0;
-            while (doc[i] != null) {
-                user_names.push(doc[i].id);
-                i++;
+    // 로그인 체크
+    restrict(req, res, function() {
+        db.userinfo.find({}, function(err, doc) {
+            var user_names = exports.user_names = [];
+
+            try {
+                var i = 0;
+                while (doc[i] != null) {
+                    user_names.push(doc[i].id);
+                    i++;
+                }
+
+                for (var i = 0; i < user_names.length; i++) {
+                    user_names[i] = '\'' + user_names[i] + '\'';
+                }
+
+                res.render('push_page', {
+                    title: 'push page',
+                    user_names: user_names
+                });
             }
-
-            for (var i = 0; i < user_names.length; i++) {
-                user_names[i] = '\'' + user_names[i] + '\'';
+            catch (err) {
+                console.log(err);
             }
-
-            res.render('push_page', {
-                title: 'push page',
-                user_names: user_names
-            });
-        }
-        catch (err) {
-            console.log(err);
-        }
+        });
     });
 }
 

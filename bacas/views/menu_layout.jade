@@ -8,6 +8,8 @@ html
             div(id='header')
                 a(href='/web/user_management')
                     img(id='logo',src='/images/bacas.png', width=250, height=80)
+                span(class='btn_logout')
+                    a(href='/logout', id='log-info') Logout
                 ul(id='nav',class='sf-menu')
                     li
                         a(href='/web/user_management') 사용자 정보
@@ -23,6 +25,7 @@ html
                         a(href='/web/developer_management') 정보 수정
                     li
                         a(href='/web/sdk') SDK
+
             div(id='main')
                 div(id='content')
                     block content

@@ -1,5 +1,15 @@
 var db = require('./../db_structure');
 
+// 로그인 체크 함수
+function restrict(req, res, next) {
+    if (req.session.user) {
+        next();
+    } else {
+        req.session.error = 'Access denied!';
+        res.redirect('/login');
+    }
+}
+
 exports.datatree_user=function(req,res){
     console.log("data tree of user");
     var idArray =[];
@@ -93,7 +103,11 @@ exports.datatree_push=function(req,res){
 }
 exports.datatree_page= function (req, res) {
     console.log("data tree");
-    res.render('datatree_page', {
-        title: 'datatree page'
+
+    // 로그인 체크
+    restrict(req, res, function() {
+        res.render('datatree_page', {
+            title: 'datatree page'
+        });
     });
 }

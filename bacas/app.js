@@ -4,25 +4,26 @@
  */
 
 var express = require('express')
-  , http = require('http')
-  , path = require('path')
+    , http = require('http')
+    , path = require('path')
+    , MemStore = express.session.MemoryStore
     //===========================================================================================
-  , routes = require('./routes')
-  , login = require('./routes/web/login')
-  , db_structure = require('./routes/db_structure')
-    testDB = require('./routes/testDB')
-   //===============================web page routing javascript===================================
-  , user_management = require('./routes/web/user_management')
-  , push_management = require('./routes/web/push_management')
-  , location_management = require('./routes/web/location_management')
-  , file_management = require('./routes/web/file_management')
-  , rank_management = require('./routes/web/rank_management')
-  , datatree = require('./routes/web/datatree')
-  , developer_management = require('./routes/web/developer_management')
-  //===============================mobile page routing javascript=================================
-  , rank = require('./routes/mobile/rank')
-  , user = require('./routes/mobile/user')
-  , location = require('./routes/mobile/location');
+    , routes = require('./routes')
+    , login = require('./routes/web/login')
+    , db_structure = require('./routes/db_structure')
+    , testDB = require('./routes/testDB')
+    //===============================web page routing javascript===================================
+    , user_management = require('./routes/web/user_management')
+    , push_management = require('./routes/web/push_management')
+    , location_management = require('./routes/web/location_management')
+    , file_management = require('./routes/web/file_management')
+    , rank_management = require('./routes/web/rank_management')
+    , datatree = require('./routes/web/datatree')
+    , developer_management = require('./routes/web/developer_management')
+    //===============================mobile page routing javascript=================================
+    , rank = require('./routes/mobile/rank')
+    , user = require('./routes/mobile/user')
+    , location = require('./routes/mobile/location');
 
 var app = express();
 
@@ -34,8 +35,12 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.cookieParser('shhhh, very secret'));
+app.use(express.session({secret: 'alessios', store: MemStore({
+    reapInterval: 60000 * 10
+})}));
+app.use(app.router);
 
 // development only
 if ('development' == app.get('env')) {
@@ -51,8 +56,9 @@ app.get('/db_generation',db_structure.database) ;
 app.get('/test',testDB.developerSave);
 app.get('/test2',testDB.userSave);
 //================================= web pages=======================================
-app.get('/login',developer_management.into);
-app.post('/login/chk',developer_management.developerCheck);
+app.get('/login',developer_management.into);                                // 로그인 페이지
+app.post('/login/chk',developer_management.developerCheck);                // 로그인 확인
+app.get('/logout', developer_management.logout);
 app.get('/web/signup',developer_management.developersignup);
 app.post('/web/signup/chk',developer_management.developersignupChk);
 app.get('/web/user_management', user_management.user_page);
