@@ -4,13 +4,13 @@ var db = require('./../db_structure');     // db_structure를 불러온다
 var count;
 
 exports.push_page= function (req, res) {
-    db.deviceinfo.find({}, function(err, doc) {
+    db.userinfo.find({}, function(err, doc) {
         var user_names = exports.user_names = [];
 
         try {
             var i = 0;
             while (doc[i] != null) {
-                user_names.push(doc[i].name);
+                user_names.push(doc[i].id);
                 i++;
             }
 
@@ -30,13 +30,13 @@ exports.push_page= function (req, res) {
 }
 
 exports.regist = function(req, res) { // Device ID 등록하기
-    var device = new db.deviceinfo();
+    var device = new db.userinfo();
     var cnt = 0;
 
     console.log(req.param('regId'));
     regid = req.param('regId'); // regId 가져오기
 
-    db.deviceinfo.find({}, function(err, doc) {
+    db.userinfo.find({}, function(err, doc) {
         try {
             var i = 0;
             while (doc[i] != null) {
@@ -48,10 +48,12 @@ exports.regist = function(req, res) { // Device ID 등록하기
         }
     });
 
-    db.deviceinfo.findOne({device_id:regid}, function(err, doc) {
+    db.userinfo.findOne({device_id:regid}, function(err, doc) {
         if(doc == null) {
-            device.name = 'new' + cnt;
-            device.device_id = regid;
+            device.id = 'new' + cnt;
+            device.pwd = 'new' + cnt;
+            device.mail = 'new' + cnt;
+            device.deviceid = regid;
 
             device.save(function(err) {
                 try{
@@ -82,11 +84,11 @@ exports.send_push = function(req, res) {
     // Device ID Push
     if (req.body.to.length > 1) {
         for (var i = 0; i < req.body.to.length; i++) {
-            db.deviceinfo.findOne({name:req.body.to[i]}, function(err, doc) {
+            db.userinfo.findOne({id:req.body.to[i]}, function(err, doc) {
                 try {
                     var registrationIds = [];
                     console.log(req.body.to[i]);
-                    r = doc.device_id;
+                    r = doc.deviceid;
                     registrationIds.push(r);
 
                     sender.send(message, registrationIds, 4, function (err, result) {
@@ -104,11 +106,11 @@ exports.send_push = function(req, res) {
         }
     }
 
-    db.deviceinfo.findOne({name:req.body.to}, function(err, doc) {
+    db.userinfo.findOne({id:req.body.to}, function(err, doc) {
         try {
             var registrationIds = [];
             console.log(req.body.to);
-            r = doc.device_id;
+            r = doc.deviceid;
             registrationIds.push(r);
 
             sender.send(message, registrationIds, 4, function (err, result) {
@@ -118,7 +120,7 @@ exports.send_push = function(req, res) {
                 console.log(result);
 
             });
-            console.log(r);                   n
+            console.log(r);
         } catch (err) {
             console.log(err);
         }
