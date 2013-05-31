@@ -1,51 +1,48 @@
 var db = require('./../db_structure');     // db_structure를 불러온다
 
-// 로그인 체크 함수
-function restrict(req, res, next) {
-    if (req.session.user) {
-        next();
-    } else {
-        req.session.error = 'Access denied!';
-        res.redirect('/login');
-    }
-}
-
 exports.location_page = function(req, res) {
-    console.log("location page");
+    db.poiinfo.find({}, function(err, doc) {
+        var lat = []; // 위도
+        var lng = []; // 경도
+        var address = []; // 주소
+        var store = [];
+        var phonenumber = [];
+        var memo = [];
 
-    // 로그인 체크
-    restrict(req, res, function() {
-        db.poiinfo.find({}, function(err, doc) {
-            var lat = []; // 위도
-            var lng = []; // 경도
-            var address = [];
-
-            try {
-                var i = 0;
-                while (doc[i] != null) {
-                    lat.push(doc[i].lat);
-                    lng.push(doc[i].lng);
-                    address.push(doc[i].address);
-                    i++;
-                }
-
-                for (var i = 0; i < lat.length; i++) {
-                    lat[i] = '\'' + lat[i] + '\'';
-                    lng[i] = '\'' + lng[i] + '\'';
-                    address[i] = '\'' + address[i] + '\'';
-                }
-
-                res.render('location_page', {
-                    title: 'location page',
-                    lat: lat,
-                    lng: lng,
-                    address: address
-                });
+        try {
+            var i = 0;
+            while (doc[i] != null) {
+                lat.push(doc[i].lat);
+                lng.push(doc[i].lng);
+                address.push(doc[i].address);
+                store.push(doc[i].store);
+                phonenumber.push(doc[i].phonenumber);
+                memo.push(doc[i].memo);
+                i++;
             }
-            catch (err) {
-                console.log(err);
+
+            for (var i = 0; i < lat.length; i++) {
+                lat[i] = '\'' + lat[i] + '\'';
+                lng[i] = '\'' + lng[i] + '\'';
+                address[i] = '\'' + address[i] + '\'';
+                store[i] = '\'' + store[i] + '\'';
+                phonenumber[i] = '\'' + phonenumber[i] + '\'';
+                memo[i] = '\'' + memo[i] + '\'';
             }
-        });
+
+            res.render('location_page', {
+                title: 'location page',
+                lat: lat,
+                lng: lng,
+                address: address,
+                store: store,
+                phonenumber: phonenumber,
+                memo: memo
+            });
+        }
+        catch (err) {
+            console.log(err);
+        }
     });
 }
 
@@ -55,6 +52,9 @@ exports.addpoi= function(req, res) {
     instance.lat = req.body.lat;
     instance.lng = req.body.lng;
     instance.address = req.body.address;
+    instance.store = req.body.store;
+    instance.phonenumber = req.body.phonenumber;
+    instance.memo = req.body.memo;
 
     instance.save(function(err) {
         try {

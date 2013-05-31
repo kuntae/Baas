@@ -55,7 +55,10 @@ var rankinfo = new Schema({
 var poiinfo = new Schema({
     lat: String,
     lng: String,
-    address: String
+    address: String,
+    store: String,
+    phonenumber: String,
+    memo: String
 });
 
 //model export!!!

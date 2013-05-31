@@ -6,7 +6,7 @@ block content
     script(type='text/javascript', src="http://maps.google.com/maps/api/js?sensor=false")
     script(type='text/javascript')
         $(document).ready(function() {
-            function addRow(tableid, lat, lng, address) {
+            function addRow(tableid, lat, lng, address, store, phonenumber, memo) {
                 var table = document.getElementById(tableid);
                 var rowlen = table.rows.length;
                 var row = table.insertRow(rowlen);
@@ -17,27 +17,35 @@ block content
                 chbx.setAttribute("id", "check");
                 chbx.setAttribute("name", "check");
 
+                row.insertCell(0).innerHTML = lat;
+                row.insertCell(1).innerHTML = lng;
+                row.insertCell(2).innerHTML = address;
+                row.insertCell(3).innerHTML = store;
+                row.insertCell(4).innerHTML = phonenumber;
+                row.insertCell(5).innerHTML = memo;
+                row.insertCell(6).appendChild(chbx);
+
                 chchAll.onclick = function() {
                     var chch = document.form.check;
 
                     if(checkAll.checked == true) {
-                        for(var i = 0; i < lat.length; i++) {
+                        for(var i = 0; i < chch.length; i++) {
                             chch[i].checked = true;
                             mark[i].setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
                         }
                     }
                     else {
-                        for(var i = 0; i < lat.length; i++) {
+                        for(var i = 0; i < chch.length; i++) {
                             chch[i].checked = false;
                             mark[i].setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
                         }
                     }
                 }
 
-                chbx.onclick = function a() {
+                chbx.onclick = function() {
                     var chch = document.form.check;
 
-                    for(var i = 0; i < lat.length; i++) {
+                    for(var i = 0; i < chch.length; i++) {
                         if(chch[i].checked == true) {
                             mark[i].setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
                         }
@@ -46,22 +54,21 @@ block content
                         }
                     }
                 }
-
-                row.insertCell(0).innerHTML = lat;
-                row.insertCell(1).innerHTML = lng;
-                row.insertCell(2).innerHTML = address;
-                row.insertCell(3).appendChild(chbx);
             }
 
             var lat = new Array(#{lat});
             var lng = new Array(#{lng});
             var address = new Array(#{address});
+            var store = new Array(#{store});
+            var phonenumber = new Array(#{phonenumber});
+            var memo = new Array(#{memo});
+
             var mark = new Array();
             var ll = new Array();
 
             var latlng = new google.maps.LatLng(37.5640, 126.9751);
             var myOptions = {
-                    zoom : 12,
+                    zoom : 13,
                     center : latlng,
                     mapTypeId : google.maps.MapTypeId.ROADMAP
             }
@@ -73,7 +80,7 @@ block content
             marker.setMap(null);
 
             for(var i = 0; i < lat.length; i++) {
-                addRow('table', lat[i], lng[i], address[i]);
+                addRow('table', lat[i], lng[i], address[i], store[i], phonenumber[i], memo[i]);
                 ll[i] = new google.maps.LatLng(lat[i], lng[i]);
                 mark[i] = new google.maps.Marker({
                     position : ll[i],
@@ -155,27 +162,43 @@ block content
         table(border="1")
             tr
                 td(colspan="2")
-                    div(id="map_canvas", style="width: 460px; height: 380px;")
+                    div(id="map_canvas", style="width: 945px; height: 380px;")
             tr
                 th(width="100") 위도
                 td
-                    input(id="lat", name="lat", value="", size="53")
+                    input(id="lat", name="lat", value="", size="131")
             tr
                 th 경도
                 td
-                    input(id="lng", name="lng", value="", size="53")
+                    input(id="lng", name="lng", value="", size="131")
             tr
                 th 주소
                 td
-                    input(id="address", name="address", value="", size="53")
-        br
+                    input(id="address", name="address", value="", size="131")
+            tr
+                th 이름
+                td
+                    input(id="store", name="store", value="", size="131")
+            tr
+                th 전화번호
+                td
+                    input(id="phonenumber", name="phonenumber", value="", size="131")
+            tr
+                th 메모
+                td
+                    input(id="memo", name="memo", value="", size="131")
+
         input(type="button", name="add", value="추가", style="width:50px; height:50px", onClick="addpoi()")
         input(type="button", name="remove", value="삭제", style="width:50px; height:50px", onClick="removepoi(this.form.check)")
+        br
         br
         table(id ="table", width="600", border="1")
             tr
                 th(align="center") 위도
                 th(align="center") 경도
                 th(align="center") 주소
+                th(align="center") 이름
+                th(align="center") 전화번호
+                th(align="center") 메모
                 th
                     input(type="checkbox", name="checkAll", value="checkAll", id="checkAll")

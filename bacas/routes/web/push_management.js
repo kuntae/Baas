@@ -63,7 +63,7 @@ exports.regist = function(req, res) { // Device ID 등록하기
         }
     });
 
-    db.userinfo.findOne({device_id:regid}, function(err, doc) {
+    db.userinfo.findOne({deviceid:regid}, function(err, doc) {
         if(doc == null) {
             device.id = 'new' + cnt;
             device.pwd = 'new' + cnt;
