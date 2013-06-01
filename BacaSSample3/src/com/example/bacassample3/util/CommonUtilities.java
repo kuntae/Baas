@@ -22,14 +22,14 @@ public final class CommonUtilities {
     /**
      * Base URL of the Demo Server (such as http://my_host:8080/gcm-demo)
      */
-    public static final String SERVER_URL = "192.168.0.15";
+    public static String SERVER_URL = "113.198.80.234";
     
     public static String DEVICE_ID = "";
     /**
      * Google API project id registered to use GCM.
      *
      */
-    public static final String SENDER_ID = "752273354880";
+    public static final String SENDER_ID = "361274149162";
 
     /**
      * Tag used on log messages.

@@ -72,6 +72,10 @@
         <activity android:name=".tab2.Tab2ActivityGroup"/>
         <activity android:name=".tab2.LocationActivity" />
         
+        <!-- tab3 -->
+        <activity android:name=".tab3.Tab3ActivityGroup"/>
+        <activity android:name=".tab3.SettingActivity" />
+        
         <uses-library
             android:name="com.google.android.maps"
             android:required="true" >

@@ -2,6 +2,7 @@ package com.example.bacassample3;
 
 import com.example.bacassample3.tab1.Tab1ActivityGroup;
 import com.example.bacassample3.tab2.Tab2ActivityGroup;
+import com.example.bacassample3.tab3.Tab3ActivityGroup;
 import com.example.bacassample3.util.Client2Server;
 import com.google.android.gcm.GCMRegistrar;
 
@@ -40,7 +41,7 @@ public class MainActivity extends TabActivity {
 	private AsyncTask<Void, Void, Void> mRegisterTask;		// gcm 등록
 	private Toast toast;													// gcm 메시지
 	
-	private RegistDeviceIDAsync registDeviceIDAsync;
+//	private RegistDeviceIDAsync registDeviceIDAsync;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class MainActivity extends TabActivity {
 		
 		Intent intentTab1 = new Intent(this, Tab1ActivityGroup.class);
 		Intent intentTab2 = new Intent(this, Tab2ActivityGroup.class);
+		Intent intentTab3 = new Intent(this, Tab3ActivityGroup.class);
 		
 		TabSpec tabSpac1 = tabHost.newTabSpec("user").setIndicator("사용자", getResources().getDrawable(R.drawable.star2));
 		tabSpac1.setContent(intentTab1);
@@ -63,12 +65,34 @@ public class MainActivity extends TabActivity {
 		tabSpac2.setContent(intentTab2);
 		tabHost.addTab(tabSpac2);
 		
+		TabSpec tabSpac3 = tabHost.newTabSpec("setting").setIndicator("설정", getResources().getDrawable(R.drawable.star2));
+		tabSpac3.setContent(intentTab3);
+		tabHost.addTab(tabSpac3);
+		
 		tabWidget.getChildAt(0).setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
 				Log.i(className + " @ onCreate", "tab1Click");
 				tabWidget.setCurrentTab(0);
 				tabHost.setCurrentTab(0);
+			}
+		});
+		
+		tabWidget.getChildAt(1).setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+				Log.i(className + " @ onCreate", "tab1Click");
+				tabWidget.setCurrentTab(1);
+				tabHost.setCurrentTab(1);
+			}
+		});
+		
+		tabWidget.getChildAt(2).setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+				Log.i(className + " @ onCreate", "tab1Click");
+				tabWidget.setCurrentTab(2);
+				tabHost.setCurrentTab(2);
 			}
 		});
 		
@@ -136,8 +160,8 @@ public class MainActivity extends TabActivity {
 		
 		Log.i(className + " @ onCreate", "regId=" + regId);
 		
-		registDeviceIDAsync = new RegistDeviceIDAsync();
-		registDeviceIDAsync.execute("deviceid=" + regId);
+//		registDeviceIDAsync = new RegistDeviceIDAsync();
+//		registDeviceIDAsync.execute("deviceid=" + regId);
 	}
 	
 	@Override
@@ -169,7 +193,7 @@ public class MainActivity extends TabActivity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String newMessage = intent.getExtras().getString(EXTRA_MESSAGE);
-			
+
 			String parameters = "used_function=gcm&user_id=" + DEVICE_ID;
 			RankingAsync rankingAsync = new RankingAsync();
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
@@ -178,42 +202,6 @@ public class MainActivity extends TabActivity {
 				rankingAsync.execute(parameters);
 		}
 	};
-
-	// 유저 정보를 가져오는 클래스
-	public class RegistDeviceIDAsync extends AsyncTask<String, String, String> {
-		private final String className = "RegistDeviceIDAsync";
-		
-		private Client2Server client2Server = Client2Server.getInstance();
-		
-		@Override
-		protected String doInBackground(String... params) {
-			Log.i( className + " @ param0", params[0]);
-
-			// HttpClass에서 해당 url을 실행한다.
-			String parameter = params[0];
-			String return_value = client2Server.registUserDeviceID(parameter);
-			
-			// 쓰레드 cancel을 위한 코드
-			int count = params.length;
-			for (int i = 0; i < count; i++) {
-	             if (isCancelled()) break;
-	        }
-			
-			return return_value;
-		}
-		
-		// doInBackground 함수 다음에 실행되는 함수, text1에 내용을 저장하여 activity에 뿌린다.
-		@Override
-		protected void onPostExecute(String result) {
-//			Log.i( className + " @ result", result);
-
-		}
-		
-		@Override
-		protected void onCancelled() {
-			super.onCancelled();
-		}
-	}
 	
 	// Ranking 정보를 저장하는 AsyncTask
 	public class RankingAsync extends AsyncTask<String, String, String> {
@@ -240,7 +228,7 @@ public class MainActivity extends TabActivity {
 		// doInBackground 함수 다음에 실행되는 함수, text1에 내용을 저장하여 activity에 뿌린다.
 		@Override
 		protected void onPostExecute(String result) {
-
+//			this.cancel(true);
 		}
 		
 		@Override
