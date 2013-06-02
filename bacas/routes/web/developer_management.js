@@ -1,7 +1,7 @@
 //=============================== database require =================================
 var db = require('./../db_structure');
+
 var login = new db.developerinfo();
-var hash = require('./pass').hash
 var date = new Date();
 
 // 로그인 체크 함수
@@ -13,7 +13,12 @@ function restrict(req, res, next) {
         res.redirect('/login');
     }
 }
-
+function btoa(str){
+    return new Buffer(str,'binary').toString('base64');
+}
+function atob(str){
+    return new Buffer(str,'base64').toString('binary');
+}
 //==================================================================================
 //first login page function
 //==================================================================================
@@ -30,17 +35,20 @@ exports.logout = function(req, res) {
 //check insert id & password
 //==================================================================================
 exports.developerCheck = function(req,res){
+
     db.developerinfo.findOne({id:req.body.id},function(err,doc){ //findOne method
         try{
             if(doc.id == req.body.id){
                 // 로그인 성공
-                if(doc.pwd == req.body.password){
+                var pwd = atob(doc.pwd);
+                if(pwd == req.body.password){
                     // 고정을 방지하기 위해 세션을 재생성한다.
                     req.session.regenerate(function() {
                         // 검색하기 위해 세션 저장소에 사용자의 기본키를 저장한다.
                         req.session.user = doc;
                         req.session.success = 'Authenticated as ' + doc.id
                             + ' click to <a href="/logout">logout</a>. ';
+                        res.cookie('id',doc.id,{signed:true});
                         res.redirect('/web/user_management');
                     });
                 }else{
@@ -78,7 +86,8 @@ exports.developersignupChk= function (req, res) {
             }else{
                 var instance = new db.developerinfo();
                 instance.id = req.body.id;
-                instance.pwd = req.body.password;
+                instance.pwd = btoa(req.body.password);
+                instance.mail = req.body.mail;
                 instance.save(function(err){
                     try{
                         res.redirect('/login');
@@ -93,12 +102,60 @@ exports.developersignupChk= function (req, res) {
 
 exports.developer_page= function (req, res) {
     console.log("developer page");
-
+    var id  = req.signedCookies.id;
+    var mail;
     // 로그인 체크
     restrict(req, res, function() {
-        res.render('developer_page', {
-            title: 'developer_page'
+        db.developerinfo.findOne({id:id},function(err,doc){
+            mail = doc.mail;
+            res.render('developer_page', {
+                title: 'developer page',
+                id:id,
+                mail:mail
+            });
         });
+
     });
 }
 
+exports.developer_page_save= function (req, res) {
+    console.log("developer update");
+    var id  = req.signedCookies.id;
+    var pwdin = req.body.passwordin;
+    var pwdchk = req.body.passwordchk;
+    var mail = req.body.mail;
+    // 로그인 체크
+    restrict(req, res, function() {
+        if(pwdin!=pwdchk){
+            res.redirect('/web/developer_management');
+        }else if(pwdin==null&&pwdchk==null){
+            db.developerinfo.findOneAndUpdate({id:id},{mail:mail},function(err,doc){
+                try{
+                    mail = doc.mail;
+                    console.log('update');
+                    res.render('developer_page',{
+                        title:'develpoer page',
+                        id:id,
+                        mail:mail
+                    });
+                }catch(err){
+                    console.log('save error');
+                }
+            });
+        }else{
+            db.developerinfo.findOneAndUpdate({id:id},{pwd:pwd,mail:mail},function(err,doc){
+                try{
+                    mail = doc.mail;
+                    console.log('update');
+                    res.render('developer_page',{
+                        title:'develpoer page',
+                        id:id,
+                        mail:mail
+                    });
+                }catch(err){
+                    console.log('save error');
+                }
+            });
+        }
+    });
+}

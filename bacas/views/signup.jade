@@ -12,10 +12,14 @@ block content
     p Registe You ID
 
     form(name="form", method="post", action="/web/signup/chk")
-        label(for='id') i&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspd
+        label(for='id') identity
         input(type="text", id="id", name="id")
         br
         label(for='password') password
         input(type="password", id="password", name="password")
+        br
+        label(for='mail') e-mail
+        input(type="text", id="mail", name="mail")
+        br
         input(type="submit", name="", value="제출")
 

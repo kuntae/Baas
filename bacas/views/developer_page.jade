@@ -2,3 +2,22 @@ extends menu_layout
 
 block content
     h1= title
+
+    form(name="form", method="post",action="/web/developer_management/save")
+        table
+            tr
+                th id
+                td #{id}
+            tr
+                th password in
+                td
+                    input(type = "password", id='passwordin',size=131,name='passwordin')
+            tr
+                th password chk
+                td
+                    input(type = "password", id='passwordchk',size=131,name='passwordchk')
+            tr
+                th e-mail
+                td
+                    input(type = "text", id='mail',size=131,value='#{mail}')
+        input(type='submit', name="",value="저장")

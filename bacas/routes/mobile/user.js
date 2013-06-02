@@ -30,18 +30,33 @@ exports.user_regist_deviceid = function (req, res) {
 
     // url로 부터 parameter를 변수로 뽑는다.
     var query = url_module.parse(req.url, true).query;
-    var id = query["id"];
-    var pwd = query["pwd"];
-    var mail = query["mail"];
+    var id ;
+    var pwd ;
+    var mail = '-';
     var deviceid = query["deviceid"];
-
+    var cnt = 0;
     console.log(file_name + " id : " + id + " pwd : " + pwd + " mail : " + mail + " deviceid : " + deviceid);
+    db.userinfo.find({},function(err,doc){
+        try{
+            while(doc[cnt]!=null){
+                cnt++;
+            }
+            cnt+=1;
+        }catch(err){
+            console.log('deviceid regist error');
+        }finally{
+            console.log('find function close');
+        }
 
+    });
     db.userinfo.findOne({deviceid:deviceid},function(err,doc){
         // 기존의 id가 없다면 저장
         if(doc == null) {
             console.log(file_name + " 새로운 id 저장");
             var newUser = new db.userinfo();
+            newUser.id = 'user'+cnt;
+            newUser.pwd = 'user'+cnt;
+            newUser.mail = mail;
             newUser.deviceid = deviceid;
             newUser.save(function(err, doc) {
                 if(err != null ) {

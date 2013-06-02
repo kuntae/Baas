@@ -8,10 +8,10 @@
 
 //mongodb를 사용하기 위한 mongoose의 모듈화를 한 JavaScript
 var mongoose = require('mongoose');
-var url = 'mongodb://localhost:27017/testdb';
+var uri = "mongodb://localhost:27017/testdb";
 var db;
 
-db = mongoose.connect(url,function(err,done){
+db = mongoose.connect(uri,function(err,done){
     if(err){
         console.log('DB connection ERROR...............');
     }
@@ -20,7 +20,6 @@ db = mongoose.connect(url,function(err,done){
     }
 
 });
-
 
 var Schema = mongoose.Schema;
 //==================================================================================

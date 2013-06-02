@@ -65,9 +65,9 @@ exports.regist = function(req, res) { // Device ID 등록하기
 
     db.userinfo.findOne({deviceid:regid}, function(err, doc) {
         if(doc == null) {
-            device.id = 'new' + cnt;
-            device.pwd = 'new' + cnt;
-            device.mail = 'new' + cnt;
+            device.id = 'user' + cnt;
+            device.pwd = 'user' + cnt;
+            device.mail = 'user' + cnt;
             device.deviceid = regid;
 
             device.save(function(err) {

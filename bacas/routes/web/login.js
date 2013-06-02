@@ -7,7 +7,7 @@
  */
 //=============================== database require =================================
 var db = require('./../db_structure');
-var login = new db.userinfo();
+
 
 //==================================================================================
 //first login page function
