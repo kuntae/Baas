@@ -123,14 +123,17 @@ exports.developer_page= function (req, res) {
 exports.developer_page_save= function (req, res) {
     console.log("developer update");
     var id  = req.signedCookies.id;
-    var pwdin = req.body.passwordin;
-    var pwdchk = req.body.passwordchk;
+    var pwdin = req.body.pwdin;
+    var pwdchk = req.body.pwdchk;
+    console.log(pwdin, pwdchk);
     var mail = req.body.mail;
+    console.log(mail);
     // 로그인 체크
     restrict(req, res, function() {
         if(pwdin!=pwdchk){
             res.redirect('/web/developer_management');
         }else if(pwdin==null&&pwdchk==null){
+            console.log(id);
             db.log.developerinfo.findOneAndUpdate({id:id},{mail:mail},function(err,doc){
                 try{
                     mail = doc.mail;
@@ -141,11 +144,11 @@ exports.developer_page_save= function (req, res) {
                         mail:mail
                     });
                 }catch(err){
-                    console.log('save error');
+                    console.log(err);
                 }
             });
         }else{
-            db.log.developerinfo.findOneAndUpdate({id:id},{pwd:pwd,mail:mail},function(err,doc){
+            db.log.developerinfo.findOneAndUpdate({id:id},{pwd:btoa(pwdin), mail:mail},function(err,doc){
                 try{
                     mail = doc.mail;
                     console.log('update');
@@ -155,7 +158,7 @@ exports.developer_page_save= function (req, res) {
                         mail:mail
                     });
                 }catch(err){
-                    console.log('save error');
+                    console.log(err);
                 }
             });
         }

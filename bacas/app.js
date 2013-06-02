@@ -70,7 +70,7 @@ app.get('/web/datatree/push', datatree.datatree_push);
 app.get('/web/datatree/location', datatree.datatree_location);
 app.get('/web/datatree/rank', datatree.datatree_rank);
 app.get('/web/developer_management', developer_management.developer_page);
-app.post('/web/developer_management', developer_management.developer_page_save);
+app.post('/web/developer_management/save', developer_management.developer_page_save);
 app.post('/web/register', push_management.regist);  //mobile에서 접근하는 것은 mobile로 통일 할 것을 권장함.
 app.post('/web/send', push_management.send_push);
 app.post('/web/addpoi', location_management.addpoi);
