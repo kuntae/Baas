@@ -13,7 +13,7 @@ var url_module = require('url');            // url 모듈을 불러온다.
 exports.into = function(req,res){
     console.log(req.url);
 
-    var rank = new db.rankinfo();            // rank 가상 객체 생성
+    var rank = new db.expp.rankinfo();            // rank 가상 객체 생성
 
     // url로 부터 parameter를 변수로 뽑는다.
     var query = url_module.parse(req.url, true).query;

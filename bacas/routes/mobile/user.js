@@ -13,7 +13,7 @@ var url_module = require('url');            // url 모듈을 불러온다.
 exports.get_user_info= function (req, res) {
     console.log(file_name +  "get user info page");
 
-    db.userinfo.find({},function(err,doc){
+    db.expp.userinfo.find({},function(err,doc){
         console.log(file_name + ' ' +doc);
 
         res.render('mobile_get_data', {
@@ -26,7 +26,7 @@ exports.get_user_info= function (req, res) {
 exports.user_regist_deviceid = function (req, res) {
     console.log(file_name + ' ' + req.url);
 
-    var rank = new db.userinfo();            // user 가상 객체 생성
+    var rank = new db.expp.userinfo();            // user 가상 객체 생성
 
     // url로 부터 parameter를 변수로 뽑는다.
     var query = url_module.parse(req.url, true).query;
@@ -36,7 +36,7 @@ exports.user_regist_deviceid = function (req, res) {
     var deviceid = query["deviceid"];
     var cnt = 0;
     console.log(file_name + " id : " + id + " pwd : " + pwd + " mail : " + mail + " deviceid : " + deviceid);
-    db.userinfo.find({},function(err,doc){
+    db.expp.userinfo.find({},function(err,doc){
         try{
             while(doc[cnt]!=null){
                 cnt++;
@@ -49,11 +49,11 @@ exports.user_regist_deviceid = function (req, res) {
         }
 
     });
-    db.userinfo.findOne({deviceid:deviceid},function(err,doc){
+    db.expp.userinfo.findOne({deviceid:deviceid},function(err,doc){
         // 기존의 id가 없다면 저장
         if(doc == null) {
             console.log(file_name + " 새로운 id 저장");
-            var newUser = new db.userinfo();
+            var newUser = new db.expp.userinfo();
             newUser.id = 'user'+cnt;
             newUser.pwd = 'user'+cnt;
             newUser.mail = mail;

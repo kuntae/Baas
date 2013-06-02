@@ -11,13 +11,13 @@ var db = require('./../db_structure');     // db_structure를 불러온다.
 var url_module = require('url');            // url 모듈을 불러온다.
 
 exports.regist = function(req, res) { // Device ID 등록하기
-    var device = new db.userinfo();
+    var device = new db.expp.userinfo();
     var cnt = 0;
 
     console.log(req.param('regId'));
     regid = req.param('regId'); // regId 가져오기
 
-    db.userinfo.find({}, function(err, doc) {
+    db.expp.userinfo.find({}, function(err, doc) {
         try {
             var i = 0;
             while (doc[i] != null) {
@@ -29,7 +29,7 @@ exports.regist = function(req, res) { // Device ID 등록하기
         }
     });
 
-    db.userinfo.findOne({deviceid:regid}, function(err, doc) {
+    db.expp.userinfo.findOne({deviceid:regid}, function(err, doc) {
         if(doc == null) {
             device.id = 'user' + cnt;
             device.pwd = 'user' + cnt;

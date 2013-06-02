@@ -20,7 +20,7 @@ exports.get_location= function (req, res) {
 
     console.log('lat=' + lat + ' lng=' + lng)
 
-    db.poiinfo.find({})
+    db.expp.poiinfo.find({})
         .where('lng').gt(parseFloat(lng)-0.002).lt(parseFloat(lng)+0.002)
         .where('lat').gt(parseFloat(lat)-0.014).lt(parseFloat(lat)+0.014)
         .exec(function(err,doc){
