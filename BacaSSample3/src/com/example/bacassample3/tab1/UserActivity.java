@@ -32,10 +32,11 @@ public class UserActivity extends Activity {
 	
 	private Context contextUserActivity;
 	private UserEntity user;
-	private ArrayList<UserEntity> userList;				// userList를 저장하는 ArrayList
-	private ListView lvUserList;								// userList를 표시할 ListView
-	private UserAdapter userAdapter;						// userList를 표시할 어댑터 
-	private UserAsync userAsync;							// user정보를 가져오는 객체
+	private ArrayList<UserEntity> userList;						// userList를 저장하는 ArrayList
+	private ListView lvUserList;										// userList를 표시할 ListView
+	private UserAdapter userAdapter;								// userList를 표시할 어댑터 
+	private UserAsync userAsync;									// user정보를 가져오는 객체
+	private RegistDeviceIDAsync registDeviceIDAsync; 		// user정보를 저장하는 객체
 	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -51,27 +52,34 @@ public class UserActivity extends Activity {
 		lvUserList = (ListView) findViewById(R.id.list);
 
 		DEVICE_ID = GCMRegistrar.getRegistrationId(this);
-
-//		String parameter = "deviceid=" + DEVICE_ID;
-//		userAsync = new UserAsync();
-//		userAsync.execute(parameter);
+		
+		registDeviceIDAsync = new RegistDeviceIDAsync();
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			registDeviceIDAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "deviceid=" + DEVICE_ID);
+		else
+			registDeviceIDAsync.execute("deviceid=" + DEVICE_ID);
 	}
 	
-//	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-//	@Override
-//	protected void onResume() {
-//		super.onResume();
-//		Log.i(className + " @ onResume", "init");
-//		
-//		String parameters = "used_function=user&user_id=" + DEVICE_ID;
-//		RankingAsync rankingAsync = new RankingAsync();
-//		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-//			rankingAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, parameters);
-//		else
-//			rankingAsync.execute(parameters);
-//		
-//		Log.i(className + " @ onResume", "end");
-//	}
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Log.i(className + " @ onResume", "init");
+		
+		String parameters = "deviceid=" + DEVICE_ID;
+		
+		userAsync = new UserAsync();
+		userAsync.execute(parameters);
+		
+		String parameters2 = "used_function=user&user_id=" + DEVICE_ID;
+		RankingAsync rankingAsync = new RankingAsync();
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			rankingAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, parameters);
+		else
+			rankingAsync.execute(parameters2);
+		
+		Log.i(className + " @ onResume", "end");
+	}
 	
 	public class UserAdapter extends BaseAdapter {
 
@@ -141,7 +149,40 @@ public class UserActivity extends Activity {
 		}
 	}
 
-     
+	// 유저 정보를 저장 클래스
+	public class RegistDeviceIDAsync extends AsyncTask<String, String, String> {
+		private final String className = "RegistDeviceIDAsync";
+		
+		private Client2Server client2Server = Client2Server.getInstance();
+		
+		@Override
+		protected String doInBackground(String... params) {
+			Log.i( className + " @ param0", params[0]);
+
+			// HttpClass에서 해당 url을 실행한다.
+			String parameter = params[0];
+			String return_value = client2Server.registUserDeviceID(parameter);
+					
+			// 쓰레드 cancel을 위한 코드
+			int count = params.length;
+			for (int i = 0; i < count; i++) {
+	             if (isCancelled()) break;
+	        }
+			return return_value;
+		}
+		
+		// doInBackground 함수 다음에 실행되는 함수, text1에 내용을 저장하여 activity에 뿌린다.
+		@Override
+		protected void onPostExecute(String result) {
+			Log.i( className + " @ onPostExecute", result);
+		}
+		
+		@Override
+		protected void onCancelled() {
+			super.onCancelled();
+		}
+	}
+	
 	// 유저 정보를 가져오는 클래스
 	public class UserAsync extends AsyncTask<String, String, String> {
 		private final String className = "UserAsync";
@@ -192,6 +233,7 @@ public class UserActivity extends Activity {
 			}
 			
 			Log.i(className + " @ onPostExecute", userList.get(0).getId() + " " + userList.get(0).getPwd() + " " + userList.get(0).getMail() + " " + userList.get(0).getDeviceid());
+			
 			if(userList.size() > 0) {
 				userAdapter = new UserAdapter(contextUserActivity, userList);
 				lvUserList.setAdapter(userAdapter);
