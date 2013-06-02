@@ -1,6 +1,6 @@
 var db = require('./../db_structure');
 
-var rank = new db.rankinfo();
+var rank = new db.expp.rankinfo();
 
 // 로그인 체크 함수
 function restrict(req, res, next) {
@@ -77,32 +77,48 @@ exports.rank_page= function (req, res) {
 
     // 로그인 체크
     restrict(req, res, function() {
-        db.rankinfo.mapReduce(o, function(err, model, stats){
-            console.log('map reduce took %d ms', stats.processtime);
-            model.find({}).sort({'value':-1}).limit(3).exec( function(err, result){
-                for(i=0; i<result.length;i++){
-                    console.log('rank %d = %s : %d',i+1, result[i]._id, result[i].value.count);
-                    function_name[i] = result[i]._id;
-                    function_cnt[i] =  result[i].value.count;
-                }
+        db.expp.rankinfo.mapReduce(o, function(err, model, stats){
+            try{
+                console.log('map reduce took %d ms', stats.processtime);
+                model.find({}).sort({'value':-1}).limit(3).exec( function(err, result){
+                    for(i=0; i<result.length;i++){
+                        console.log('rank %d = %s : %d',i+1, result[i]._id, result[i].value.count);
+                        function_name[i] = result[i]._id;
+                        function_cnt[i] =  result[i].value.count;
+                    }
 
-                db.rankinfo.mapReduce(p, function(err2, model2, stats2){
-                    try{
-                        // console.log('map reduce took %d ms', stats.processtime);
-                        model2.find({}).sort({'value':-1}).exec( function(err2, result2){
-                            for(i=0;i<result2.length;i++){
-                                for(var j=0;j<7;j++){
-                                    date = getdate(j);
-                                    if(date==result2[i]._id){
-                                        flag = true;
-                                        break;
-                                    }else
-                                        flag=false;
+                    db.expp.rankinfo.mapReduce(p, function(err2, model2, stats2){
+                        try{
+                            // console.log('map reduce took %d ms', stats.processtime);
+                            model2.find({}).sort({'value':-1}).exec( function(err2, result2){
+                                for(i=0;i<result2.length;i++){
+                                    for(var j=0;j<7;j++){
+                                        date = getdate(j);
+                                        if(date==result2[i]._id){
+                                            flag = true;
+                                            break;
+                                        }else
+                                            flag=false;
+                                    }
+                                    if(flag)
+                                        d_cnt[j] = result2[i].value.count;
                                 }
-                                if(flag)
-                                    d_cnt[j] = result2[i].value.count;
-                            }
 
+                                res.render('rank_page', {
+                                    title: 'rank_page',
+                                    r1:function_name[0],
+                                    r2:function_name[1],
+                                    r3:function_name[2],
+                                    r1_p:function_cnt[0],
+                                    r2_p:function_cnt[1],
+                                    r3_p:function_cnt[2],
+                                    d_cnt:d_cnt
+                                });
+                            });
+                        }catch(err2){
+                            console.log('not data');
+                            for(i=0;i<7;i++)
+                                d_cnt.push(0);
                             res.render('rank_page', {
                                 title: 'rank_page',
                                 r1:function_name[0],
@@ -113,26 +129,27 @@ exports.rank_page= function (req, res) {
                                 r3_p:function_cnt[2],
                                 d_cnt:d_cnt
                             });
-                        });
-                    }catch(err2){
-                        console.log('not data');
-                        for(i=0;i<7;i++)
-                            d_cnt.push(0);
-                        res.render('rank_page', {
-                            title: 'rank_page',
-                            r1:function_name[0],
-                            r2:function_name[1],
-                            r3:function_name[2],
-                            r1_p:function_cnt[0],
-                            r2_p:function_cnt[1],
-                            r3_p:function_cnt[2],
-                            d_cnt:d_cnt
-                        });
-                    }
+                        }
+
+                    });
 
                 });
+            }catch(err){
+                console.log('not data');
+                for(i=0;i<7;i++)
+                    d_cnt.push(0);
+                res.render('rank_page', {
+                    title: 'rank_page',
+                    r1:function_name[0],
+                    r2:function_name[1],
+                    r3:function_name[2],
+                    r1_p:function_cnt[0],
+                    r2_p:function_cnt[1],
+                    r3_p:function_cnt[2],
+                    d_cnt:d_cnt
+                });
+            }
 
-            });
         });
     });
 }

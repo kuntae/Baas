@@ -52,6 +52,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 //=================================db generation====================================
 app.get('/db_generation',db_structure.database) ;
+app.get('/web/connecttoid',db_structure.connecttoid);
 //================================= web pages=======================================
 app.get('/login',developer_management.into);                                // 로그인 페이지
 app.post('/login/chk',developer_management.developerCheck);                // 로그인 확인

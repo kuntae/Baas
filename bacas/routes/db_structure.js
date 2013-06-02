@@ -7,11 +7,11 @@
  */
 
 //mongodb를 사용하기 위한 mongoose의 모듈화를 한 JavaScript
-var mongoose = require('mongoose');
-var uri = "mongodb://localhost:27017/testdb";
+var mongoose = exports.mongoose = require('mongoose');
+var uri = "mongodb://localhost:27017/logdb";
 var db;
-
-db = mongoose.connect(uri,function(err,done){
+var log = {};
+db = mongoose.createConnection(uri,function(err){
     if(err){
         console.log('DB connection ERROR...............');
     }
@@ -60,12 +60,27 @@ var poiinfo = new Schema({
     memo: String
 });
 
-//model export!!!
-var developerinfo = exports.developerinfo = mongoose.model('developerinfo',developerinfo);
-var userinfo = exports.userinfo = mongoose.model('userinfo',userinfo);
-var rankinfo = exports.rankinfo = mongoose.model('rankinfo',rankinfo);
-var poiinfo = exports.poiinfo = mongoose.model('poiinfo', poiinfo);
+
+log.developerinfo = db.model('developerinfo', developerinfo);
+
+exports.log = log;
 
 exports.database = function(req,res){
     res.redirect('/login');
 };
+var id;
+var con =exports.con =  mongoose.createConnection();
+var expp = {};
+expp.userinfo = con.model('userinfo', userinfo);
+expp.rankinfo = con.model('rankinfo', rankinfo);
+expp.poiinfo = con.model('poiinfo', poiinfo);
+exports.expp = expp;
+exports.connecttoid = function(req,res){
+    id = req.signedCookies.id;
+    con.open('localhost', id,27017);
+    res.redirect('/web/user_management');
+};
+
+
+
+

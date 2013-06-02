@@ -1,6 +1,6 @@
 //=============================== database require =================================
 var db = require('./../db_structure');
-var login = new db.developerinfo();
+var login = new db.expp.userinfo();
 var date = new Date();
 
 // 로그인 체크 함수
@@ -25,7 +25,7 @@ exports.user_page= function (req, res) {
 
     // 로그인 체크
     restrict(req, res, function() {
-        db.userinfo.find({},function(err,doc){
+        db.expp.userinfo.find({},function(err,doc){
             countValue = doc.length;
             for(var i=0;i<doc.length;i++){
                 idArray.push('\''+doc[i].id+'\'');

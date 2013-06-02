@@ -1,7 +1,7 @@
 var db = require('./../db_structure');     // db_structure를 불러온다
 
 exports.location_page = function(req, res) {
-    db.poiinfo.find({}, function(err, doc) {
+    db.expp.poiinfo.find({}, function(err, doc) {
         var lat = []; // 위도
         var lng = []; // 경도
         var address = []; // 주소
@@ -47,7 +47,7 @@ exports.location_page = function(req, res) {
 }
 
 exports.addpoi= function(req, res) {
-    var instance = new db.poiinfo();
+    var instance = new db.expp.poiinfo();
 
     instance.lat = req.body.lat;
     instance.lng = req.body.lng;
@@ -71,7 +71,7 @@ exports.removepoi= function(req, res) {
 
     if (req.body.remove.length > 1) {
         for (var i = 0; i < req.body.remove.length; i++) {
-            db.poiinfo.remove({lat : req.body.remove[i]}, function(err) {
+            db.expp.poiinfo.remove({lat : req.body.remove[i]}, function(err) {
                 try {
                     res.redirect('/web/location_management');
                 }
@@ -82,7 +82,7 @@ exports.removepoi= function(req, res) {
         }
     }
 
-    db.poiinfo.remove({lat : req.body.remove}, function(err) {
+    db.expp.poiinfo.remove({lat : req.body.remove}, function(err) {
         try {
             res.redirect('/web/location_management');
         }

@@ -16,7 +16,7 @@ exports.datatree_user=function(req,res){
     var mailArray=[];
     var deviceArray=[];
     var countValue;
-    db.userinfo.find({},function(err,doc){
+    db.expp.userinfo.find({},function(err,doc){
         countValue = doc.length;
         for(var i=0;i<doc.length;i++){
             idArray.push('\''+doc[i].id+'\'');
@@ -39,7 +39,7 @@ exports.datatree_rank=function(req,res){
     var date=[];
     var user_id=[];
     var countValue;
-    db.rankinfo.find({},function(err,doc){
+    db.expp.rankinfo.find({},function(err,doc){
         countValue = doc.length;
         for(var i=0;i<doc.length;i++){
             usedfunction.push('\''+doc[i].used_function+'\'');
@@ -61,7 +61,7 @@ exports.datatree_location=function(req,res){
     var lngArray=[];
     var addressArray=[];
     var countValue;
-    db.poiinfo.find({},function(err,doc){
+    db.expp.poiinfo.find({},function(err,doc){
         countValue = doc.length;
         for(var i=0;i<doc.length;i++){
             latArray.push('\''+doc[i].lat+'\'');
@@ -84,7 +84,7 @@ exports.datatree_push=function(req,res){
     var mailArray=[];
     var deviceArray=[];
     var countValue;
-    db.userinfo.find({},function(err,doc){
+    db.expp.userinfo.find({},function(err,doc){
         countValue = doc.length;
         for(var i=0;i<doc.length;i++){
             idArray.push('\''+doc[i].id+'\'');

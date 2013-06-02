@@ -18,7 +18,7 @@ exports.push_page= function (req, res) {
 
     // 로그인 체크
     restrict(req, res, function() {
-        db.userinfo.find({}, function(err, doc) {
+        db.expp.userinfo.find({}, function(err, doc) {
             var user_names = exports.user_names = [];
 
             try {
@@ -45,13 +45,13 @@ exports.push_page= function (req, res) {
 }
 
 exports.regist = function(req, res) { // Device ID 등록하기
-    var device = new db.userinfo();
+    var device = new db.expp.userinfo();
     var cnt = 0;
 
     console.log(req.param('regId'));
     regid = req.param('regId'); // regId 가져오기
 
-    db.userinfo.find({}, function(err, doc) {
+    db.expp.userinfo.find({}, function(err, doc) {
         try {
             var i = 0;
             while (doc[i] != null) {
@@ -63,7 +63,7 @@ exports.regist = function(req, res) { // Device ID 등록하기
         }
     });
 
-    db.userinfo.findOne({deviceid:regid}, function(err, doc) {
+    db.expp.userinfo.findOne({deviceid:regid}, function(err, doc) {
         if(doc == null) {
             device.id = 'user' + cnt;
             device.pwd = 'user' + cnt;
@@ -99,7 +99,7 @@ exports.send_push = function(req, res) {
     // Device ID Push
     if (req.body.to.length > 1) {
         for (var i = 0; i < req.body.to.length; i++) {
-            db.userinfo.findOne({id:req.body.to[i]}, function(err, doc) {
+            db.expp.userinfo.findOne({id:req.body.to[i]}, function(err, doc) {
                 try {
                     var registrationIds = [];
                     console.log(req.body.to[i]);
@@ -121,7 +121,7 @@ exports.send_push = function(req, res) {
         }
     }
 
-    db.userinfo.findOne({id:req.body.to}, function(err, doc) {
+    db.expp.userinfo.findOne({id:req.body.to}, function(err, doc) {
         try {
             var registrationIds = [];
             console.log(req.body.to);

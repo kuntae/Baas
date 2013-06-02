@@ -1,7 +1,7 @@
 //=============================== database require =================================
 var db = require('./../db_structure');
 
-var login = new db.developerinfo();
+var login = new db.log.developerinfo();
 var date = new Date();
 
 // 로그인 체크 함수
@@ -28,6 +28,7 @@ exports.into = function(req,res){
 
 exports.logout = function(req, res) {
     req.session.destroy(function() {
+        db.con.close();
         res.redirect('/');
     });
 }
@@ -36,7 +37,7 @@ exports.logout = function(req, res) {
 //==================================================================================
 exports.developerCheck = function(req,res){
 
-    db.developerinfo.findOne({id:req.body.id},function(err,doc){ //findOne method
+    db.log.developerinfo.findOne({id:req.body.id},function(err,doc){ //findOne method
         try{
             if(doc.id == req.body.id){
                 // 로그인 성공
@@ -48,8 +49,9 @@ exports.developerCheck = function(req,res){
                         req.session.user = doc;
                         req.session.success = 'Authenticated as ' + doc.id
                             + ' click to <a href="/logout">logout</a>. ';
+
                         res.cookie('id',doc.id,{signed:true});
-                        res.redirect('/web/user_management');
+                        res.redirect('/web/connecttoid');
                     });
                 }else{
                     console.log('else this position');
@@ -70,7 +72,7 @@ exports.developersignup= function (req, res) {
 }
 
 exports.developersignupChk= function (req, res) {
-    db.developerinfo.findOne({id:req.body.id},function(err,doc){ //findOne method
+    db.log.developerinfo.findOne({id:req.body.id},function(err,doc){ //findOne method
         try{
             if(doc.id == req.body.id){
                 res.render('signup',{
@@ -84,7 +86,7 @@ exports.developersignupChk= function (req, res) {
                     title:'비밀번호가 올바르지 않습니다. 4글자 이상 입력하세요'
                 });
             }else{
-                var instance = new db.developerinfo();
+                var instance = new db.log.developerinfo();
                 instance.id = req.body.id;
                 instance.pwd = btoa(req.body.password);
                 instance.mail = req.body.mail;
@@ -106,7 +108,7 @@ exports.developer_page= function (req, res) {
     var mail;
     // 로그인 체크
     restrict(req, res, function() {
-        db.developerinfo.findOne({id:id},function(err,doc){
+        db.log.developerinfo.findOne({id:id},function(err,doc){
             mail = doc.mail;
             res.render('developer_page', {
                 title: 'developer page',
@@ -129,7 +131,7 @@ exports.developer_page_save= function (req, res) {
         if(pwdin!=pwdchk){
             res.redirect('/web/developer_management');
         }else if(pwdin==null&&pwdchk==null){
-            db.developerinfo.findOneAndUpdate({id:id},{mail:mail},function(err,doc){
+            db.log.developerinfo.findOneAndUpdate({id:id},{mail:mail},function(err,doc){
                 try{
                     mail = doc.mail;
                     console.log('update');
@@ -143,7 +145,7 @@ exports.developer_page_save= function (req, res) {
                 }
             });
         }else{
-            db.developerinfo.findOneAndUpdate({id:id},{pwd:pwd,mail:mail},function(err,doc){
+            db.log.developerinfo.findOneAndUpdate({id:id},{pwd:pwd,mail:mail},function(err,doc){
                 try{
                     mail = doc.mail;
                     console.log('update');
