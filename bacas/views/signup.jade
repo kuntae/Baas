@@ -8,18 +8,23 @@
 extends layout
 
 block content
-    h1= title
-    p Registe You ID
+    h1(align = 'center')= title
+    p(align = 'center') Registe You ID
 
     form(name="form", method="post", action="/web/signup/chk")
-        label(for='id') identity
-        input(type="text", id="id", name="id")
-        br
-        label(for='password') password
-        input(type="password", id="password", name="password")
-        br
-        label(for='mail') e-mail
-        input(type="text", id="mail", name="mail")
-        br
-        input(type="submit", name="", value="제출")
+        table
+            tr
+                th id
+                td
+                    input(type="text", id="id",size=130, name="id")
+            tr
+                th password
+                td
+                    input(type="password", id="password",size=130, name="password")
+            tr
+                th e-mail
+                td
+                    input(type="text", id="mail",size=130, name="mail")
+
+        input(type="submit", name="", value="제출").myButton
 

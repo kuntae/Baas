@@ -8,14 +8,19 @@
 extends layout
 
 block content
-    h1= title
-    p Welcome to Bacas
+    h1(align = 'center')= title
+    p(align = 'center') Welcome to Bacas
 
     form(name="form", method="post", action="/login/chk")
-        label(for='id') id
-        input(type="text", id="id", name="id")
-        label(for='password') password
-        input(type="password", id="password", name="password")
-        input(type="submit", name="", value="제출")
+        table
+            tr
+                th id
+                td
+                    input(type="text", id="id",size=130, name="id")
+            tr
+                th password
+                td
+                    input(type="password", id="password",size=130, name="password")
+        input(type="submit", name="", value="제출").myButton
     form(name="form2", method="get", action="/web/signup")
-        input(type="submit", name="",value="register")
+        input(type="submit", name="",value="register").myButton
