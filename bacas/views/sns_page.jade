@@ -1,0 +1,117 @@
+extends menu_layout
+
+block content
+    h1= title
+
+    script(type='text/javascript', src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js")
+    script(type='text/javascript', src="/js/kakaoLink.js")
+    script(type='text/javascript')
+
+        function onChangeType( type ) {
+
+            document.getElementById("app_name_div").style.display="none";
+            document.getElementById("app_url_div").style.display="none";
+            document.getElementById("memo_div").style.display="none";
+
+            if(type == 'facebook') {
+                document.getElementById("type").value="facebook";
+                document.getElementById("app_url_div").style.display="";
+            } else if(type == 'twitter') {
+                document.getElementById("type").value="twitter";
+                document.getElementById("memo_div").style.display="";
+                document.getElementById("app_url_div").style.display="";
+            } else if(type == 'me2day') {
+                document.getElementById("type").value="me2day";
+                document.getElementById("memo_div").style.display="";
+            } else if(type == 'cacao') {
+                document.getElementById("type").value="cacao";
+                document.getElementById("memo_div").style.display="";
+                document.getElementById("app_url_div").style.display="";
+                document.getElementById("app_name_div").style.display="";
+            } else {
+            }
+        }
+
+        function onSubmit( type ) {
+            var type = document.getElementById("type").value;
+            var app_name = document.getElementById("app_name").value;
+            var app_url = document.getElementById("app_url").value;
+            var memo = document.getElementById("memo").value;
+
+            var sns_url = '';
+
+            var windowW = '420';
+            var windowH = '425';
+            var s = 'left=' + (window.screen.width  - windowW) / 2 + ', top=' + (window.screen.height - windowH) / 2 ;
+
+
+            if(type == 'facebook') {
+                sns_url = 'http://www.facebook.com/sharer.php?u=' + app_url + '&src=sp';
+                window.open(sns_url ,'_blank','toolbar=no,location=no,directories=no, status=no,menubar=no,resizable=no, scrollbars=yes,width=835,height=425,' + s );
+            } else if(type == 'twitter') {
+                sns_url = 'http://twitter.com/share?text=' + memo + '&url=' + app_url;
+                window.open(sns_url ,'_blank','toolbar=no,location=no,directories=no, status=no,menubar=no,resizable=no, scrollbars=yes,width=835,height=425,' + s );
+            } else if(type == 'me2day') {
+                sns_url = 'http://me2day.net/posts/new?new_post[body]=' +memo;
+                window.open(sns_url ,'_blank','toolbar=no,location=no,directories=no, status=no,menubar=no,resizable=no, scrollbars=yes,width=835,height=425,' + s );
+            } else if(type == 'cacao') {
+                jQuery(function() {
+                    var msg = memo;
+                    var url = app_url;
+                    var appid = "앱id";
+                    var appver = "2.0";
+                    var appname = app_name;
+                    var link = new com.kakao.talk.KakaoLink(msg, url, appid, appver, appname);
+                    link.execute();
+                });
+            } else {
+                alert('SNS 종류가 결정되지 않았습니다. facebook으로 공유합니다.');
+                sns_url = 'http://www.facebook.com/sharer.php?u=' + app_url + '&src=sp';
+                window.open(sns_url ,'_blank','toolbar=no,location=no,directories=no, status=no,menubar=no,resizable=no, scrollbars=yes,width=835,height=425,' + s );
+            }
+        }
+
+
+    input(type="hidden", id="type", name="type", value="facebook")
+
+    #sns_menu_div
+        table
+            tr
+                th(width="200") SNS 종류
+                td
+                    input(type="radio", name="select", onclick="javascript:onChangeType('facebook')", checked="yes")
+                    img(src="/images/icoFacebook.gif")
+                    input(type="radio", name="select", onclick="javascript:onChangeType('twitter')")
+                    img(src="/images/icoTwitter.gif")
+                    input(type="radio", name="select", onclick="javascript:onChangeType('me2day')")
+                    img(src="/images/icoMetoday.gif")
+                    input(type="radio", name="select", onclick="javascript:onChangeType('cacao')")
+                    img(src="/images/kakao.jpg")
+
+    #app_name_div(style="display:none")
+        table
+            tr
+                th(width="200") 어플리케이션 이름
+                td
+                    input(id = "app_name", size="40", name="app_name", value="app_name")
+
+    #app_url_div(style="")
+        table
+            tr
+                th(width="200") 어플리케이션 URL
+                td
+                    input(id = "app_url", size="40", name="app_url", value="http://www.naver.com")
+
+    #memo_div(style="display:none")
+        table
+            tr
+                th(width="200") 글 내용
+                td
+                    input(id = "memo", size="40", name="memo", value="memo")
+
+    #button(style="float:right")
+        input(type="button", onclick="javascript:onSubmit()", class="myButton", value="자랑하기")
+
+    br
+
+    ※ 카카오톡 공유는 모바일웹에서만 가능하며 카카오톡이 설치되어 있어야 합니다.

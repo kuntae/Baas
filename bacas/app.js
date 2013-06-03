@@ -19,6 +19,7 @@ var express = require('express')
     , rank_management = require('./routes/web/rank_management')
     , datatree = require('./routes/web/datatree')
     , developer_management = require('./routes/web/developer_management')
+    , sns_mangement = require('./routes/web/sns_management')
     //===============================mobile page routing javascript=================================
     , rank = require('./routes/mobile/rank')
     , user = require('./routes/mobile/user')
@@ -75,6 +76,7 @@ app.post('/web/register', push_management.regist);  //mobile에서 접근하는 
 app.post('/web/send', push_management.send_push);
 app.post('/web/addpoi', location_management.addpoi);
 app.post('/web/removepoi', location_management.removepoi);
+app.get('/web/sns_share', sns_mangement.sns_page);
 //================================mobile page=======================================
 app.get('/mobile/rank',rank.into)
 app.get('/mobile/user_regist_deviceid', user.user_regist_deviceid)
