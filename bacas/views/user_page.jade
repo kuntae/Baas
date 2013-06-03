@@ -4,13 +4,14 @@ extends menu_layout
 
 block content
     script(type='text/javascript')
-        function addRow(tableid,id,mail,device){
+        function addRow(tableid,id,mail,imei,device){
             var table = document.getElementById(tableid);
             var rowlen = table.rows.length;
             var row = table.insertRow(rowlen);
             row.insertCell(0).innerHTML = id;
             row.insertCell(1).innerHTML = mail;
-            row.insertCell(2).innerHTML = device;
+            row.insertCell(2).innerHTML = imei;
+            row.insertCell(3).innerHTML = device;
 
         }
         function generate(count){
@@ -18,17 +19,19 @@ block content
             var idArray = new Array(#{idArray});
             var mailArray = new Array(#{mailArray});
             var deviceArray = new Array(#{deviceArray});
+            var imeiArray = new Array(#{imeiArray});
             for(i=0; i<count; i++){
-                 addRow('table',idArray[i],mailArray[i],deviceArray[i]);
+                addRow('table',idArray[i],mailArray[i], imeiArray[i], deviceArray[i]);
             }
         }
 
     h1= title
     table(id='table', width='600', border=1)
        tr
-           th(align="center") UserID
-           th(align="center") E-Mail
-           th(align="center") DeviceID
+           th(align="center", width="100") UserID
+           th(align="center", width="100") E-Mail
+           th(align="center", width="100") IMEI ID
+           th(align="center", width="300") GCM ID
 
     script(type='text/javascript')
         generate('#{countValue}');

@@ -34,8 +34,12 @@ exports.user_regist_deviceid = function (req, res) {
     var pwd ;
     var mail = '-';
     var deviceid = query["deviceid"];
+    var imeiid = query["imeiid"];
     var cnt = 0;
-    console.log(file_name + " id : " + id + " pwd : " + pwd + " mail : " + mail + " deviceid : " + deviceid);
+    console.log(file_name + " id : " + id + " pwd : " + pwd
+        + " mail : " + mail + " deviceid : " + deviceid + "imeiid : " + imeiid);
+
+    // 데이터가 없을 경우 에러처리
     db.expp.userinfo.find({},function(err,doc){
         try{
             while(doc[cnt]!=null){
@@ -47,9 +51,10 @@ exports.user_regist_deviceid = function (req, res) {
         }finally{
             console.log('find function close');
         }
-
     });
-    db.expp.userinfo.findOne({deviceid:deviceid},function(err,doc){
+
+    // 검색
+    db.expp.userinfo.findOne({imeiid:imeiid},function(err,doc){
         // 기존의 id가 없다면 저장
         if(doc == null) {
             console.log(file_name + " 새로운 id 저장");
@@ -58,15 +63,22 @@ exports.user_regist_deviceid = function (req, res) {
             newUser.pwd = 'user'+cnt;
             newUser.mail = mail;
             newUser.deviceid = deviceid;
+            newUser.imeiid = imeiid;
             newUser.save(function(err, doc) {
                 if(err != null ) {
                     console.log(file_name + ' save error ' + err)
                 }
             });
         }
-        // 기존의 id가 있다면 무시
+        // 기존의 id가 있다면 deviceid를 업데이트
         else {
-            console.log(file_name + " 이미 정보가 저장되어 있습니다.")
+            db.expp.userinfo.findOneAndUpdate({imeiid:imeiid},{deviceid:deviceid},function(err,doc2){
+                try{
+                    console.log(file_name + " deviceid 정보를 업데이트 하였습니다.")
+                }catch(err){
+                    console.log(file_name + " deviceid 업데이터 에러 " + err);
+                }
+            });
             console.log(file_name + ' ' + doc.id + ' ' + doc.pwd + ' ' + doc.mail + ' ' + doc.deviceid);
         }
     });
