@@ -8,6 +8,9 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
     
+    <!--  IMEI ID를 얻기 위한 권한 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    
     <!-- GCM을 사용하기 위한 코드 시작 -->
     <!-- GCM connects to Google Services. -->
     <uses-permission android:name="android.permission.INTERNET" />

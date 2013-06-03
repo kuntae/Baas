@@ -24,12 +24,14 @@ public final class CommonUtilities {
      */
     public static String SERVER_URL = "113.198.80.234";
     
+    public static String IMEI_ID = "";
+    
     public static String DEVICE_ID = "";
     /**
      * Google API project id registered to use GCM.
      *
      */
-    public static final String SENDER_ID = "361274149162";
+    public static String SENDER_ID = "361274149162";
 
     /**
      * Tag used on log messages.

@@ -17,6 +17,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import static com.example.bacassample3.util.CommonUtilities.DEVICE_ID;
+import static com.example.bacassample3.util.CommonUtilities.IMEI_ID;
 
 public class UserActivity extends Activity {
 	String className = "UserActivity";
@@ -51,13 +53,21 @@ public class UserActivity extends Activity {
 		userList = new ArrayList<UserEntity>();
 		lvUserList = (ListView) findViewById(R.id.list);
 
+		TelephonyManager telephonyManager = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
+				
+		IMEI_ID = telephonyManager.getDeviceId();
 		DEVICE_ID = GCMRegistrar.getRegistrationId(this);
+		
+		Log.i(className + " @ onCreate", "imeiid=" + IMEI_ID + "deviceid=" + DEVICE_ID);
+		
+		Log.i(className + " @ onCreate", "imeiid=" + IMEI_ID );
+		Log.i(className + " @ onCreate", "deviceid=" + DEVICE_ID);
 		
 		registDeviceIDAsync = new RegistDeviceIDAsync();
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-			registDeviceIDAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "deviceid=" + DEVICE_ID);
+			registDeviceIDAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "imeiid=" + IMEI_ID + "&deviceid=" + DEVICE_ID);
 		else
-			registDeviceIDAsync.execute("deviceid=" + DEVICE_ID);
+			registDeviceIDAsync.execute("imeiid=" + IMEI_ID + "&deviceid=" + DEVICE_ID);
 	}
 	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -66,17 +76,17 @@ public class UserActivity extends Activity {
 		super.onResume();
 		Log.i(className + " @ onResume", "init");
 		
-		String parameters = "deviceid=" + DEVICE_ID;
-		
 		userAsync = new UserAsync();
-		userAsync.execute(parameters);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			userAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "imeiid=" + IMEI_ID + "&deviceid=" + DEVICE_ID);
+		else
+			userAsync.execute("imeiid=" + IMEI_ID + "&deviceid=" + DEVICE_ID);
 		
-		String parameters2 = "used_function=user&user_id=" + DEVICE_ID;
 		RankingAsync rankingAsync = new RankingAsync();
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-			rankingAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, parameters);
+			rankingAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "used_function=user&user_id=" + DEVICE_ID);
 		else
-			rankingAsync.execute(parameters2);
+			rankingAsync.execute("used_function=user&user_id=" + DEVICE_ID);
 		
 		Log.i(className + " @ onResume", "end");
 	}
