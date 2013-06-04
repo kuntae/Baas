@@ -128,8 +128,8 @@ exports.send_push = function(req, res) {
                         }else{
                             console.log(result);
                             var infos = new db.expp.pushinfo();
-
-                            db.expp.userinfo.findOne({deviceid:r},function(err,doc){
+                            var cnt = 0;
+                            db.expp.userinfo.findOne({deviceid:registrationIds[cnt]},function(err,doc){
                                 var tmp = getdate(6);
                                 infos.date = tmp;
                                 infos.message = req.body.message;
@@ -138,6 +138,7 @@ exports.send_push = function(req, res) {
                                 infos.save(function(err){
                                     try{
                                         console.log('save');
+                                        cnt++;
                                     }catch(err){
                                         console.log(err);
                                     }
