@@ -74,6 +74,7 @@ app.get('/web/developer_management', developer_management.developer_page);
 app.post('/web/developer_management/save', developer_management.developer_page_save);
 app.post('/web/register', push_management.regist);  //mobile에서 접근하는 것은 mobile로 통일 할 것을 권장함.
 app.post('/web/send', push_management.send_push);
+app.post('/web/reserve_send', push_management.reserve_send_push);
 app.post('/web/addpoi', location_management.addpoi);
 app.post('/web/removepoi', location_management.removepoi);
 app.get('/web/sns_share', sns_mangement.sns_page);
