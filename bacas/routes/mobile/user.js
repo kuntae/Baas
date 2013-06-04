@@ -11,13 +11,19 @@ var url_module = require('url');            // url 모듈을 불러온다.
 
 // 유저정보를 받아오기
 exports.get_user_info= function (req, res) {
-    console.log(file_name +  "get user info page");
+    console.log(file_name +  " get user info page");
 
     db.expp.userinfo.find({},function(err,doc){
         console.log(file_name + ' ' +doc);
 
+        var result = [];
+
+        for(var i=0;i<doc.length;i++) {
+            result.push("{" + "imeiid:"+ "\'" + doc[i].imeiid + "\'" + ",id:" + "\'" + doc[i].id + "\'" + ",mail:" + "\'" + doc[i].mail + "\'" + "}");
+        }
+
         res.render('mobile_get_data', {
-            mobile_data: '[' + doc + ']'
+            mobile_data: '[' + result + ']'
         });
     });
 }
@@ -53,35 +59,41 @@ exports.user_regist_deviceid = function (req, res) {
         }
     });
 
-    // 검색
-    db.expp.userinfo.findOne({imeiid:imeiid},function(err,doc){
-        // 기존의 id가 없다면 저장
-        if(doc == null) {
-            console.log(file_name + " 새로운 id 저장");
-            var newUser = new db.expp.userinfo();
-            newUser.id = 'user'+cnt;
-            newUser.pwd = 'user'+cnt;
-            newUser.mail = mail;
-            newUser.deviceid = deviceid;
-            newUser.imeiid = imeiid;
-            newUser.save(function(err, doc) {
-                if(err != null ) {
-                    console.log(file_name + ' save error ' + err)
-                }
-            });
-        }
-        // 기존의 id가 있다면 deviceid를 업데이트
-        else {
-            db.expp.userinfo.findOneAndUpdate({imeiid:imeiid},{deviceid:deviceid},function(err,doc2){
-                try{
-                    console.log(file_name + " deviceid 정보를 업데이트 하였습니다.")
-                }catch(err){
-                    console.log(file_name + " deviceid 업데이터 에러 " + err);
-                }
-            });
-            console.log(file_name + ' ' + doc.id + ' ' + doc.pwd + ' ' + doc.mail + ' ' + doc.deviceid);
-        }
-    });
+    if(imeiid == null) {
+        console.long(file_name + 'imeiid is undefined')
+    }
+
+    else {
+        // 검색
+        db.expp.userinfo.findOne({imeiid:imeiid},function(err,doc){
+            // 기존의 id가 없다면 저장
+            if(doc == null) {
+                console.log(file_name + " 새로운 id 저장");
+                var newUser = new db.expp.userinfo();
+                newUser.id = 'user'+cnt;
+                newUser.pwd = 'user'+cnt;
+                newUser.mail = mail;
+                newUser.deviceid = deviceid;
+                newUser.imeiid = imeiid;
+                newUser.save(function(err, doc) {
+                    if(err != null ) {
+                        console.log(file_name + ' save error ' + err)
+                    }
+                });
+            }
+            // 기존의 id가 있다면 deviceid를 업데이트
+            else {
+                db.expp.userinfo.findOneAndUpdate({imeiid:imeiid},{deviceid:deviceid},function(err,doc2){
+                    try{
+                        console.log(file_name + " deviceid 정보를 업데이트 하였습니다.")
+                    }catch(err){
+                        console.log(file_name + " deviceid 업데이터 에러 " + err);
+                    }
+                });
+                console.log(file_name + ' ' + doc.id + ' ' + doc.pwd + ' ' + doc.mail + ' ' + doc.deviceid);
+            }
+        });
+    }
 }
 
 // 유저 정보 전체를 저장
