@@ -40,7 +40,7 @@ exports.user_page= function (req, res) {
             }
 
             res.render('user_page', {
-                title: 'user page',
+                title: 'user',
                 idArray: idArray,
                 mailArray:mailArray,
                 deviceArray:deviceArray,

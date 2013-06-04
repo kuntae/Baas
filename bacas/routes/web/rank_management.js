@@ -105,7 +105,7 @@ exports.rank_page= function (req, res) {
                                 }
 
                                 res.render('rank_page', {
-                                    title: 'rank_page',
+                                    title: 'rank',
                                     r1:function_name[0],
                                     r2:function_name[1],
                                     r3:function_name[2],
@@ -120,7 +120,7 @@ exports.rank_page= function (req, res) {
                             for(i=0;i<7;i++)
                                 d_cnt.push(0);
                             res.render('rank_page', {
-                                title: 'rank_page',
+                                title: 'rank',
                                 r1:function_name[0],
                                 r2:function_name[1],
                                 r3:function_name[2],
@@ -139,7 +139,7 @@ exports.rank_page= function (req, res) {
                 for(i=0;i<7;i++)
                     d_cnt.push(0);
                 res.render('rank_page', {
-                    title: 'rank_page',
+                    title: 'rank',
                     r1:function_name[0],
                     r2:function_name[1],
                     r3:function_name[2],

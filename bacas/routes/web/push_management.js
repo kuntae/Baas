@@ -49,7 +49,7 @@ exports.push_page= function (req, res) {
                 }
 
                 res.render('push_page', {
-                    title: 'push page',
+                    title: 'push',
                     user_names: user_names
                 });
             }
