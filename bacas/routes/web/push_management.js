@@ -104,7 +104,7 @@ exports.regist = function(req, res) { // Device ID 등록하기
 exports.send_push = function(req, res) {
     var gcm = require('node-gcm');
     var message = new gcm.Message();
-    var sender = new gcm.Sender('AIzaSyBptZgxytckKtDPAX8nVnKEvORISa7SR9s'); // API Key
+    var sender = new gcm.Sender('AIzaSyDk9LE1o9omiCZjeePeUoVj6FowMI9OQmk'); // API Key
 
     // message.addData('message', res.message); // Key, Value (보내고 싶은 메시지)
     message.addData('message', req.body.message);
@@ -219,7 +219,7 @@ exports.reserve_send_push = function(req, res) {
     setTimeout(function() {
         if (req.body.to.length > 1) {
             for (var i = 0; i < req.body.to.length; i++) {
-                db.userinfo.findOne({id:req.body.to[i]}, function(err, doc) {
+                db.expp.userinfo.findOne({id:req.body.to[i]}, function(err, doc) {
                     try {
                         var registrationIds = [];
                         console.log(req.body.to[i]);
@@ -257,7 +257,7 @@ exports.reserve_send_push = function(req, res) {
             }
         }
 
-        db.userinfo.findOne({id:req.body.to}, function(err, doc) {
+        db.expp.userinfo.findOne({id:req.body.to}, function(err, doc) {
             try {
                 var registrationIds = [];
                 console.log(req.body.to);
