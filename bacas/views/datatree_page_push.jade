@@ -17,22 +17,22 @@ extends menu_layout
 
 block content
     script(type='text/javascript')
-        function addRow(tableid,id,mail,device){
+        function addRow(tableid,date,msg,user){
             var table = document.getElementById(tableid);
             var rowlen = table.rows.length;
             var row = table.insertRow(rowlen);
-            row.insertCell(0).innerHTML = id;
-            row.insertCell(1).innerHTML = mail;
-            row.insertCell(2).innerHTML = device;
+            row.insertCell(0).innerHTML = date;
+            row.insertCell(1).innerHTML = msg;
+            row.insertCell(2).innerHTML = user;
 
         }
         function generate(count){
             var i;
-            var idArray = new Array(#{idArray});
-            var mailArray = new Array(#{mailArray});
-            var deviceArray = new Array(#{deviceArray});
+            var dateArray = new Array(#{dateArray});
+            var msgArray = new Array(#{msgArray});
+            var useridArray = new Array(#{useridArray});
             for(i=0; i<count; i++){
-                 addRow('table',idArray[i],mailArray[i],deviceArray[i]);
+                 addRow('table',dateArray[i],msgArray[i],useridArray[i]);
             }
         }
 
@@ -49,8 +49,8 @@ block content
 
     table(id='table')
         tr
+            th Date
+            th Message
             th User ID
-            th E-Mail
-            th Device ID
     script
         generate('#{countValue}');

@@ -17,13 +17,16 @@ extends menu_layout
 
 block content
     script(type='text/javascript')
-        function addRow(tableid,id,mail,device){
+        function addRow(tableid,id,mail,address,store,pnum,memo){
             var table = document.getElementById(tableid);
             var rowlen = table.rows.length;
             var row = table.insertRow(rowlen);
             row.insertCell(0).innerHTML = id;
             row.insertCell(1).innerHTML = mail;
-            row.insertCell(2).innerHTML = device;
+            row.insertCell(2).innerHTML = address;
+            row.insertCell(3).innerHTML = store;
+            row.insertCell(4).innerHTML = pnum;
+            row.insertCell(5).innerHTML = memo;
 
         }
         function generate(count){
@@ -31,8 +34,11 @@ block content
             var latArray = new Array(#{latArray});
             var lngArray = new Array(#{lngArray});
             var addressArray = new Array(#{addressArray});
+            var storeArray = new Array(#{storeArray});
+            var pnumArray = new Array(#{pnumArray});
+            var memoArray = new Array(#{memoArray});
             for(i=0; i<count; i++){
-                 addRow('table',latArray[i],lngArray[i],addressArray[i]);
+                 addRow('table',latArray[i],lngArray[i],addressArray[i],storeArray[i],pnumArray[i],memoArray[i]);
             }
         }
 
@@ -52,5 +58,8 @@ block content
             th latitude
             th longitude
             th Address
+            th Store
+            th Phone
+            th memo
     script
         generate('#{countValue}');

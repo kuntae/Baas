@@ -15,6 +15,7 @@ exports.datatree_user=function(req,res){
     var idArray =[];
     var mailArray=[];
     var deviceArray=[];
+    var imeiArray=[];
     var countValue;
     db.expp.userinfo.find({},function(err,doc){
         countValue = doc.length;
@@ -22,6 +23,8 @@ exports.datatree_user=function(req,res){
             idArray.push('\''+doc[i].id+'\'');
             mailArray.push('\''+doc[i].mail+'\'');
             deviceArray.push('\''+doc[i].deviceid+'\'');
+            imeiArray.push('\''+doc[i].imeiid+'\'');
+
         }
 
         res.render('datatree_page_user', {
@@ -29,6 +32,7 @@ exports.datatree_user=function(req,res){
             idArray: idArray,
             mailArray:mailArray,
             deviceArray:deviceArray,
+            imeiArray:imeiArray,
             countValue: countValue
         });
     });
@@ -60,6 +64,9 @@ exports.datatree_location=function(req,res){
     var latArray =[];
     var lngArray=[];
     var addressArray=[];
+    var storeArray=[];
+    var pnumArray=[];
+    var memoArray=[];
     var countValue;
     db.expp.poiinfo.find({},function(err,doc){
         countValue = doc.length;
@@ -67,6 +74,9 @@ exports.datatree_location=function(req,res){
             latArray.push('\''+doc[i].lat+'\'');
             lngArray.push('\''+doc[i].lng+'\'');
             addressArray.push('\''+doc[i].address+'\'');
+            storeArray.push('\''+doc[i].store+'\'');
+            pnumArray.push('\''+doc[i].phonenumber+'\'');
+            memoArray.push('\''+doc[i].memo+'\'');
         }
 
         res.render('datatree_page_location', {
@@ -74,29 +84,32 @@ exports.datatree_location=function(req,res){
             latArray: latArray,
             lngArray:lngArray,
             addressArray:addressArray,
+            storeArray:storeArray,
+            pnumArray:pnumArray,
+            memoArray:memoArray,
             countValue: countValue
         });
     });
 }
 exports.datatree_push=function(req,res){
     console.log("data tree of push");
-    var idArray =[];
-    var mailArray=[];
-    var deviceArray=[];
+    var dateArray =[];
+    var msgArray=[];
+    var useridArray=[];
     var countValue;
-    db.expp.userinfo.find({},function(err,doc){
+    db.expp.pushinfo.find({},function(err,doc){
         countValue = doc.length;
         for(var i=0;i<doc.length;i++){
-            idArray.push('\''+doc[i].id+'\'');
-            mailArray.push('\''+doc[i].mail+'\'');
-            deviceArray.push('\''+doc[i].deviceid+'\'');
+            dateArray.push('\''+doc[i].date+'\'');
+            msgArray.push('\''+doc[i].message+'\'');
+            useridArray.push('\''+doc[i].userid+'\'');
         }
 
         res.render('datatree_page_push', {
             title: 'datatree page',
-            idArray: idArray,
-            mailArray:mailArray,
-            deviceArray:deviceArray,
+            dateArray: dateArray,
+            msgArray:msgArray,
+            useridArray:useridArray,
             countValue: countValue
         });
     });

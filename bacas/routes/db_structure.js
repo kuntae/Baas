@@ -61,6 +61,11 @@ var poiinfo = new Schema({
     memo: String
 });
 
+var pushinfo = new Schema({
+    date:String,
+    message:String,
+    userid:String
+});
 
 log.developerinfo = db.model('developerinfo', developerinfo);
 
@@ -75,6 +80,7 @@ var expp = {};
 expp.userinfo = con.model('userinfo', userinfo);
 expp.rankinfo = con.model('rankinfo', rankinfo);
 expp.poiinfo = con.model('poiinfo', poiinfo);
+expp.pushinfo = con.model('pushinfo',pushinfo);
 exports.expp = expp;
 exports.connecttoid = function(req,res){
     id = req.signedCookies.id;

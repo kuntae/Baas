@@ -3,6 +3,22 @@ var r;
 var db = require('./../db_structure');     // db_structure를 불러온다
 var count;
 
+var getdate = function(i){
+    // var settingDate = new Date();
+    //settingDate.setDate(settingDate.getDate()-6+i); //i일 전
+
+    var settingDate =new Date();
+    settingDate.setDate(settingDate.getDate()-6+i);
+    var y = settingDate.getFullYear();
+    var m = settingDate.getMonth() + 1;
+    var d = settingDate.getDate();
+    var h = settingDate.getHours();
+    var mi = settingDate.getMinutes();
+    var s = settingDate.getSeconds();
+    var resultDate = y + '-' + m + '-'+ d+ '-'+ h+ '-'+ mi+ '-'+ s;
+    return resultDate;
+}
+
 // 로그인 체크 함수
 function restrict(req, res, next) {
     if (req.session.user) {
@@ -88,7 +104,7 @@ exports.regist = function(req, res) { // Device ID 등록하기
 exports.send_push = function(req, res) {
     var gcm = require('node-gcm');
     var message = new gcm.Message();
-    var sender = new gcm.Sender('AIzaSyDk9LE1o9omiCZjeePeUoVj6FowMI9OQmk'); // API Key
+    var sender = new gcm.Sender('AIzaSyBptZgxytckKtDPAX8nVnKEvORISa7SR9s'); // API Key
 
     // message.addData('message', res.message); // Key, Value (보내고 싶은 메시지)
     message.addData('message', req.body.message);
@@ -109,8 +125,26 @@ exports.send_push = function(req, res) {
                     sender.send(message, registrationIds, 4, function (err, result) {
                         if(err) {
                             console.log(err);
+                        }else{
+                            console.log(result);
+                            var infos = new db.expp.pushinfo();
+
+                            db.expp.userinfo.findOne({deviceid:r},function(err,doc){
+                                var tmp = getdate(6);
+                                infos.date = tmp;
+                                infos.message = req.body.message;
+                                infos.userid = doc.id;
+
+                                infos.save(function(err){
+                                    try{
+                                        console.log('save');
+                                    }catch(err){
+                                        console.log(err);
+                                    }
+                                });
+                            });
                         }
-                        console.log(result);
+
 
                     });
                     console.log(r);
@@ -131,9 +165,24 @@ exports.send_push = function(req, res) {
             sender.send(message, registrationIds, 4, function (err, result) {
                 if(err) {
                     console.log(err);
-                }
-                console.log(result);
+                }else{
+                    console.log(result);
+                    db.expp.userinfo.findOne({deviceid:registrationIds[0]},function(err,docs){
+                        var infos = new db.expp.pushinfo();
+                        var tmp = getdate(6);
+                        infos.date = tmp;                            3
+                        infos.message = req.body.message;
+                        infos.userid = docs.id;
 
+                        infos.save(function(err){
+                            try{
+                                console.log('save');
+                            }catch(err){
+                                console.log(err);
+                            }
+                        });
+                    });
+                }
             });
             console.log(r);
         } catch (err) {
