@@ -145,8 +145,6 @@ exports.send_push = function(req, res) {
                                 });
                             });
                         }
-
-
                     });
                     console.log(r);
                 } catch (err) {
@@ -191,4 +189,111 @@ exports.send_push = function(req, res) {
         }
     });
     res.redirect('/web/push_management');
+}
+
+exports.reserve_send_push = function(req, res) {
+    var gcm = require('node-gcm');
+    var message = new gcm.Message();
+    var sender = new gcm.Sender('AIzaSyDk9LE1o9omiCZjeePeUoVj6FowMI9OQmk'); // API Key
+    var date = require('date-utils');
+
+    // message.addData('message', res.message); // Key, Value (보내고 싶은 메시지)
+    message.addData('message', req.body.message);
+    message.collapseKey = 'demo';
+    message.delayWhileIdle = true;
+    message.timeToLive = 3;
+
+    var dt = new Date();
+
+    var year = req.body.year;
+    var month = req.body.month;
+    var day = req.body.day;
+    var hour = req.body.hour;
+    var min = req.body.min;
+    var sec = req.body.sec;
+
+    var reserve_time = year*12*30*24*60*60*1000 + month*30*24*60*60*1000 + day*24*60*60*1000 + hour*60*60*1000 + min*60*1000 + sec*1000;
+
+    console.log(reserve_time);
+
+    setTimeout(function() {
+        if (req.body.to.length > 1) {
+            for (var i = 0; i < req.body.to.length; i++) {
+                db.userinfo.findOne({id:req.body.to[i]}, function(err, doc) {
+                    try {
+                        var registrationIds = [];
+                        console.log(req.body.to[i]);
+                        r = doc.deviceid;
+                        registrationIds.push(r);
+
+                        sender.send(message, registrationIds, 4, function (err, result) {
+                            if(err) {
+                                console.log(err);
+                            }
+                            console.log(result);
+                            var infos = new db.expp.pushinfo();
+                            var cnt = 0;
+                            db.expp.userinfo.findOne({deviceid:registrationIds[cnt]},function(err,doc){
+                                var tmp = getdate(6);
+                                infos.date = tmp;
+                                infos.message = req.body.message;
+                                infos.userid = doc.id;
+
+                                infos.save(function(err){
+                                    try{
+                                        console.log('save');
+                                        cnt++;
+                                    }catch(err){
+                                        console.log(err);
+                                    }
+                                });
+                            });
+                        });
+                        console.log(r);
+                    } catch (err) {
+                        console.log(err);
+                    }
+                });
+            }
+        }
+
+        db.userinfo.findOne({id:req.body.to}, function(err, doc) {
+            try {
+                var registrationIds = [];
+                console.log(req.body.to);
+                r = doc.deviceid;
+                registrationIds.push(r);
+
+                sender.send(message, registrationIds, 4, function (err, result) {
+                    if(err) {
+                        console.log(err);
+                    }
+                    console.log(result);
+                    var infos = new db.expp.pushinfo();
+                    var cnt = 0;
+                    db.expp.userinfo.findOne({deviceid:registrationIds[cnt]},function(err,doc){
+                        var tmp = getdate(6);
+                        infos.date = tmp;
+                        infos.message = req.body.message;
+                        infos.userid = doc.id;
+
+                        infos.save(function(err){
+                            try{
+                                console.log('save');
+                                cnt++;
+                            }catch(err){
+                                console.log(err);
+                            }
+                        });
+                    });
+                });
+
+                console.log(r);
+            } catch (err) {
+                console.log(err);
+            }
+        });
+
+        res.redirect('/web/push_management');
+    },  reserve_time);
 }
