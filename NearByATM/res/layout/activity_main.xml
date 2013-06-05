@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainListActivity" >
+	
+    
+    
+    <LinearLayout
+        android:id="@+id/main_mapcontainer"
+        android:layout_width="fill_parent" 
+	    android:layout_height="fill_parent" >
+        
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+			android:id="@+id/map"
+  			android:layout_width="match_parent"
+  			android:layout_height="match_parent"
+  			class="com.google.android.gms.maps.SupportMapFragment"
+  			map:mapType="normal"
+  			map:cameraZoom="15"
+  			map:cameraTargetLat="37.556232"
+  			map:cameraTargetLng="126.972439" />
+	
+	</LinearLayout>
+
+    <LinearLayout
+	    android:id="@+id/adLayout"
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+    >
+    </LinearLayout>
+    
+    <fragment
+        android:id="@+id/main_menu"
+        class="com.botduo.nearbyatm.MainMenuFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+	
+</FrameLayout>

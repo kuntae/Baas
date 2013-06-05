@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NearByATM</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_settings">Settings</string>
+    <string name="notice">공지사항</string>
+    <string name="faq">FAQ</string>
+    <string name="devinfo">개발자정보</string>
+    
+    <string name="button_tracking_off">OO</string>
+    <string name="button_tracking_onwithout">TO</string>
+    <string name="button_tracking_onwith">TH</string>
+    <string name="button_filtering">필터링</string>
+    <string name="button_augmented">AM</string>
+    <string name="str_done">종료</string>
+
+    <string name="ATM">ATM</string>
+    <string name="CS">편의점</string>
+    <string name="filter">찾고 싶은 은행 및 편의점을 선택하세요.</string>
+    <string name="filtering_clear">필터링 해제</string>
+    
+    <string name="Name">개발자 이름 : </string>
+    <string name="DevName">BotDuo</string>
+    <string name="Email">개발자 E-Mail : </string>
+    <string name="DevEmail">botduo@gmail.com</string>
+    <string name="back">BACK</string>
+        
+    <string name="atm1">국민은행</string>
+    <string name="atm2">농협</string>
+    <string name="atm3">우리은행</string>
+    <string name="atm4">스탠다드차타드</string>
+    <string name="atm5">IBK</string>
+    <string name="atm6">외환은행</string>
+    <string name="atm7">수협</string>
+    <string name="atm8">신한은행</string>
+    <string name="atm9">씨티뱅크</string>
+    <string name="atm10">대구은행</string>
+    <string name="atm11">부산은행</string>
+    <string name="atm12">산업은행</string>
+    <string name="atm13">광주은행</string>
+    <string name="atm14">제주은행</string>
+    <string name="atm15">전북은행</string>
+    <string name="atm16">경남은행</string>
+    <string name="atm17">하나은행</string>
+    <string name="atm18">우체국</string>
+    <string name="atm19">새마을금고</string>
+    <string name="atm20">신협</string>
+    <string name="atmall">모든 은행</string>
+    
+    <string name="cs1">GS25</string>
+    <string name="cs2">세븐일레븐</string>
+    <string name="cs3">미니스톱</string>
+    <string name="cs4">CU</string>
+    <string name="cs5">바이더웨이</string>
+    <string name="csall">모든 편의점</string>
+
+    <!-- gcm -->
+    <string name="error_config">Please set the %1$s constant and recompile the app.</string>
+    <string name="already_registered">Device is already registered on server.</string>
+    <string name="gcm_registered">From GCM: device successfully registered!</string>
+    <string name="gcm_unregistered">From GCM: device successfully unregistered!</string>    
+    <string name="gcm_message">From GCM: you got message!</string>
+    <string name="gcm_error">From GCM: error (%1$s).</string>
+    <string name="gcm_recoverable_error">From GCM: recoverable error (%1$s).</string>
+    <string name="gcm_deleted">From GCM: server deleted %1$d pending messages!</string>    
+    <string name="server_registering">Trying (attempt %1$d/%2$d) to register device on Demo Server.</string>
+    <string name="server_registered">From Demo Server: successfully added device!</string>    
+    <string name="server_unregistered">From Demo Server: successfully removed device!</string>
+    <string name="server_register_error">Could not register device on Demo Server after %1$d attempts.</string>
+    <string name="server_unregister_error">Could not unregister device on Demo Server (%1$s).</string>
+    
+</resources>

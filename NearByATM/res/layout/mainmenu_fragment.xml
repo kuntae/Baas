@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="right|bottom"
+    android:orientation="vertical" >
+
+    <com.botduo.nearbyatm.TrackingButton
+        android:id="@+id/mainmenu_fragment_bttracking"
+        android:layout_width="40dip"
+        android:layout_height="40dip"
+        android:background="@drawable/current_location_button_default" />
+
+    <Button
+        android:id="@+id/mainmenu_fragment_btfiltering"
+        android:layout_width="40dip"
+        android:layout_height="40dip"
+        android:background="@drawable/filtering_button_default" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="30dip" />
+
+</LinearLayout>

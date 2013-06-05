@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/ATM"
+            android:layout_width="0px"
+            android:layout_height="40dip"
+            android:layout_weight="1"
+            android:background="@drawable/atm_button_selector"
+            android:text="은   행"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/CS"
+            android:layout_width="0px"
+            android:layout_height="40dip"
+            android:layout_weight="1"
+            android:background="@drawable/cs_button_selector"
+            android:text="편 의 점"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="40dip"
+            android:background="@drawable/filtering_bg_top"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:text="@string/filter"
+            android:textSize="15dip" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:background="#ffffff" >
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <TableLayout
+                android:id="@+id/page1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#ffffff"
+                android:visibility="visible" >
+
+                <TableRow>
+
+                    <ImageButton
+                        android:id="@+id/atm1"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/marker_kb" />
+
+                    <ImageButton
+                        android:id="@+id/atm2"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/marker_nh" />
+
+                    <ImageButton
+                        android:id="@+id/atm3"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/marker_woori" />
+
+                    <ImageButton
+                        android:id="@+id/atm4"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/marker_sc" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atm1" />
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atm2" />
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atm3" />
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atm4" />
+                </TableRow>
+
+                <TableRow>
+
+                    <ImageButton
+                        android:id="@+id/atm5"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/marker_ibk" />
+
+                    <ImageButton
+                        android:id="@+id/atm6"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/marker_keb" />
+
+                    <ImageButton
+                        android:id="@+id/atm7"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/marker_sh" />
+
+                    <ImageButton
+                        android:id="@+id/atm8"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/marker_shinhan" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atm5" />
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atm6" />
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atm7" />
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atm8" />
+                </TableRow>
+
+                <TableRow>
+
+                    <ImageButton
+                        android:id="@+id/atm9"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/marker_cb" />
+
+                    <ImageButton
+                        android:id="@+id/atm10"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/marker_dgb" />
+
+                    <ImageButton
+                        android:id="@+id/atm11"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/marker_bb" />
+
+                    <ImageButton
+                        android:id="@+id/atm12"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/marker_kdb" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atm9" />
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atm10" />
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atm11" />
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atm12" />
+                </TableRow>
+
+                <TableRow>
+
+                    <ImageButton
+                        android:id="@+id/atm13"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/marker_gjb" />
+
+                    <ImageButton
+                        android:id="@+id/atm14"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/marker_jjb" />
+
+                    <ImageButton
+                        android:id="@+id/atm15"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/marker_kjb" />
+
+                    <ImageButton
+                        android:id="@+id/atm16"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/marker_knb" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atm13" />
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atm14" />
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atm15" />
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atm16" />
+                </TableRow>
+
+                <TableRow>
+
+                    <ImageButton
+                        android:id="@+id/atm17"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/marker_hana" />
+
+                    <ImageButton
+                        android:id="@+id/atm18"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/marker_post" />
+
+                    <ImageButton
+                        android:id="@+id/atm19"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/marker_kfcc" />
+
+                    <ImageButton
+                        android:id="@+id/atm20"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/marker_shinhyup" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atm17" />
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atm18" />
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atm19" />
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atm20" />
+                </TableRow>
+
+                <TableRow>
+
+                    <ImageButton
+                        android:id="@+id/atmall"
+                        style="@style/FilteringButton"
+                        android:src="@drawable/filtering_button_default" />
+
+                    <View style="@style/FilteringButton" />
+
+                    <View style="@style/FilteringButton" />
+
+                    <View style="@style/FilteringButton" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="@style/FilteringButtonText"
+                        android:text="@string/atmall" />
+
+                    <View style="@style/FilteringButtonText" />
+
+                    <View style="@style/FilteringButtonText" />
+
+                    <View style="@style/FilteringButtonText" />
+                </TableRow>
+            </TableLayout>
+        </ScrollView>
+
+        <TableLayout
+            android:id="@+id/page2"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:visibility="invisible" >
+
+            <TableRow>
+
+                <ImageButton
+                    android:id="@+id/cs1"
+                    style="@style/FilteringButton"
+                    android:src="@drawable/marker_gs25" />
+
+                <ImageButton
+                    android:id="@+id/cs2"
+                    style="@style/FilteringButton"
+                    android:src="@drawable/marker_seveneleven" />
+
+                <ImageButton
+                    android:id="@+id/cs3"
+                    style="@style/FilteringButton"
+                    android:src="@drawable/marker_ministop" />
+
+                <ImageButton
+                    android:id="@+id/cs4"
+                    style="@style/FilteringButton"
+                    android:src="@drawable/marker_cu" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    style="@style/FilteringButtonText"
+                    android:text="@string/cs1" />
+
+                <TextView
+                    style="@style/FilteringButtonText"
+                    android:text="@string/cs2" />
+
+                <TextView
+                    style="@style/FilteringButtonText"
+                    android:text="@string/cs3" />
+
+                <TextView
+                    style="@style/FilteringButtonText"
+                    android:text="@string/cs4" />
+            </TableRow>
+
+            <TableRow>
+
+                <ImageButton
+                    android:id="@+id/cs5"
+                    style="@style/FilteringButton"
+                    android:src="@drawable/marker_bytheway" />
+
+                <ImageButton
+                    android:id="@+id/csall"
+                    style="@style/FilteringButton"
+                    android:src="@drawable/filtering_button_default" />
+
+                <ImageButton style="@style/FilteringButton" />
+
+                <ImageButton style="@style/FilteringButton" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    style="@style/FilteringButtonText"
+                    android:text="@string/cs5" />
+
+                <TextView
+                    style="@style/FilteringButtonText"
+                    android:text="@string/csall" />
+
+                <View style="@style/FilteringButtonText" />
+
+                <View style="@style/FilteringButtonText" />
+            </TableRow>
+        </TableLayout>
+    </FrameLayout>
+
+</LinearLayout>
