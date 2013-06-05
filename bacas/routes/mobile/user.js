@@ -59,15 +59,14 @@ exports.user_regist_deviceid = function (req, res) {
         }
     });
 
-    if(imeiid == null) {
-        console.long(file_name + 'imeiid is undefined')
-    }
 
-    else {
-        // 검색
-        db.expp.userinfo.findOne({imeiid:imeiid},function(err,doc){
-            // 기존의 id가 없다면 저장
-            if(doc == null) {
+        // 검색;
+    console.log('error = '+imeiid);
+    db.expp.userinfo.findOne({imeiid:imeiid},function(err,doc){
+        // 기존의 id가 없다면 저장
+        try{
+            if(doc==null&&imeiid!=null){
+                console.log('findOne Function return value is NULL');
                 console.log(file_name + " 새로운 id 저장");
                 var newUser = new db.expp.userinfo();
                 newUser.id = 'user'+cnt;
@@ -76,13 +75,13 @@ exports.user_regist_deviceid = function (req, res) {
                 newUser.deviceid = deviceid;
                 newUser.imeiid = imeiid;
                 newUser.save(function(err, doc) {
-                    if(err != null ) {
-                        console.log(file_name + ' save error ' + err)
+                    try{
+                        console.log('saved')
+                    }catch(err){
+                        console.log(file_name + ' save error ' + err);
                     }
                 });
-            }
-            // 기존의 id가 있다면 deviceid를 업데이트
-            else {
+            }else{
                 db.expp.userinfo.findOneAndUpdate({imeiid:imeiid},{deviceid:deviceid},function(err,doc2){
                     try{
                         console.log(file_name + " deviceid 정보를 업데이트 하였습니다.")
@@ -90,10 +89,12 @@ exports.user_regist_deviceid = function (req, res) {
                         console.log(file_name + " deviceid 업데이터 에러 " + err);
                     }
                 });
-                console.log(file_name + ' ' + doc.id + ' ' + doc.pwd + ' ' + doc.mail + ' ' + doc.deviceid);
             }
-        });
-    }
+
+        }catch(err){
+            console.log(err);
+        }
+    });
 }
 
 // 유저 정보 전체를 저장

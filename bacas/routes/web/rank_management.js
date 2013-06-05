@@ -15,7 +15,8 @@ function restrict(req, res, next) {
 var o = {};
 o.map = function(){
     //this.used_function.forEach(function(element){
-    emit(this.used_function,{count:1}) ;
+    if(this.used_function!=null)
+        emit(this.used_function,{count:1}) ;
     //});
 }
 o.reduce = function(k, vals){

@@ -23,7 +23,6 @@ var express = require('express')
     //===============================mobile page routing javascript=================================
     , rank = require('./routes/mobile/rank')
     , user = require('./routes/mobile/user')
-    , push = require('./routes/mobile/push')
     , location = require('./routes/mobile/location');
 
 var app = express();
@@ -38,9 +37,7 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.cookieParser('shhhh, very secret'));
-app.use(express.session({secret: 'alessios', store: MemStore({
-    reapInterval: 60000 * 10
-})}));
+app.use(express.session({secret: 'alessios'}));
 app.use(app.router);
 
 // development only
@@ -72,7 +69,7 @@ app.get('/web/datatree/location', datatree.datatree_location);
 app.get('/web/datatree/rank', datatree.datatree_rank);
 app.get('/web/developer_management', developer_management.developer_page);
 app.post('/web/developer_management/save', developer_management.developer_page_save);
-app.post('/web/register', push_management.regist);  //mobile에서 접근하는 것은 mobile로 통일 할 것을 권장함.
+app.post('/web/register', push_management.regist);
 app.post('/web/send', push_management.send_push);
 app.post('/web/reserve_send', push_management.reserve_send_push);
 app.post('/web/addpoi', location_management.addpoi);
@@ -84,7 +81,7 @@ app.get('/mobile/user_regist_deviceid', user.user_regist_deviceid)
 app.get('/mobile/user_regist_all', user.user_regist_all)
 app.get('/mobile/get_user_info', user.get_user_info);
 app.get('/mobile/get_location', location.get_location);
-app.post('/mobile/push_register',push.regist); //mobile로 통일한 js파일
+
 
 //=================================create Server===================================
 http.createServer(app).listen(app.get('port'), function(){

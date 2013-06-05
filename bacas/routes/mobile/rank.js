@@ -20,17 +20,19 @@ exports.into = function(req,res){
     var used_function = query["used_function"];
     var user_id = query["user_id"];
 
+    if(used_function!=""){
+        rank.used_function = used_function;
+        rank.user_id = user_id;
+        rank.date = Date.now();
 
+        rank.save(function(err){
+            try{
+                res.render('rank',{title:"rank"});
+            }catch (err){
+                console.log('SAVE ERROR');
+            }
+        });
+    }
     // rank에 변수를 집어 넣은 후 DB에 저장한다.
-    rank.used_function = used_function;
-    rank.user_id = user_id;
-    rank.date = Date.now();
 
-    rank.save(function(err){
-        try{
-            res.render('rank',{title:"rank"});
-        }catch (err){
-            console.log('SAVE ERROR');
-        }
-    });
 };

@@ -88,7 +88,7 @@ exports.regist = function(req, res) { // Device ID 등록하기
 
             device.save(function(err) {
                 try{
-                    res.render('push_management',{title:"push_management"});
+                   // res.render('push_management',{title:"push_management"});
                 }catch (err){
                     console.log('SAVE ERROR');
                 }
@@ -104,7 +104,7 @@ exports.regist = function(req, res) { // Device ID 등록하기
 exports.send_push = function(req, res) {
     var gcm = require('node-gcm');
     var message = new gcm.Message();
-    var sender = new gcm.Sender('AIzaSyDk9LE1o9omiCZjeePeUoVj6FowMI9OQmk'); // API Key
+    var sender = new gcm.Sender('AIzaSyBptZgxytckKtDPAX8nVnKEvORISa7SR9s'); // API Key
 
     // message.addData('message', res.message); // Key, Value (보내고 싶은 메시지)
     message.addData('message', req.body.message);
@@ -194,7 +194,7 @@ exports.send_push = function(req, res) {
 exports.reserve_send_push = function(req, res) {
     var gcm = require('node-gcm');
     var message = new gcm.Message();
-    var sender = new gcm.Sender('AIzaSyDk9LE1o9omiCZjeePeUoVj6FowMI9OQmk'); // API Key
+    var sender = new gcm.Sender('AIzaSyBptZgxytckKtDPAX8nVnKEvORISa7SR9s'); // API Key
     var date = require('date-utils');
 
     // message.addData('message', res.message); // Key, Value (보내고 싶은 메시지)
