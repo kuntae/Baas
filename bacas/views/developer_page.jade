@@ -1,7 +1,8 @@
 extends menu_layout
 
 block content
-    h1= title
+    br
+    h1(align="center")=title
 
     form(name="form", method="post",action="/web/developer_management/save")
         table
@@ -20,4 +21,4 @@ block content
                 th e-mail
                 td
                     input(type = "mail", id='mail',name='mail',size=131,value='#{mail}')
-        input(type='submit', name="",value="저장")
+        input(type='submit', name="",value="저장").myButton

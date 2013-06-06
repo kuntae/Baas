@@ -111,7 +111,7 @@ exports.developer_page= function (req, res) {
         db.log.developerinfo.findOne({id:id},function(err,doc){
             mail = doc.mail;
             res.render('developer_page', {
-                title: 'developer page',
+                title: 'Edit Developer Profile',
                 id:id,
                 mail:mail
             });

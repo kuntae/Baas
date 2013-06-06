@@ -31,7 +31,7 @@ exports.location_page = function(req, res) {
             }
 
             res.render('location_page', {
-                title: 'location page',
+                title: 'Geographical Information (POI)',
                 lat: lat,
                 lng: lng,
                 address: address,

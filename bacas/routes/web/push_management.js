@@ -49,7 +49,7 @@ exports.push_page= function (req, res) {
                 }
 
                 res.render('push_page', {
-                    title: 'push',
+                    title: 'Push Notification',
                     user_names: user_names
                 });
             }

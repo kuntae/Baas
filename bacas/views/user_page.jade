@@ -8,11 +8,11 @@ block content
             var table = document.getElementById(tableid);
             var rowlen = table.rows.length;
             var row = table.insertRow(rowlen);
+
             row.insertCell(0).innerHTML = id;
             row.insertCell(1).innerHTML = mail;
             row.insertCell(2).innerHTML = imei;
             row.insertCell(3).innerHTML = device;
-
         }
         function generate(count){
             var i;
@@ -24,8 +24,9 @@ block content
                 addRow('table',idArray[i],mailArray[i], imeiArray[i], deviceArray[i]);
             }
         }
-
-    h1= title
+    br
+    h1(align="center")=title
+    br
     table(id='table', width='600', border=1)
        tr
            th(align="center", width="100") UserID

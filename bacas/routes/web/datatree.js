@@ -28,7 +28,7 @@ exports.datatree_user=function(req,res){
         }
 
         res.render('datatree_page_user', {
-            title: 'datatree',
+            title: 'Data Tree (User Collection)',
             idArray: idArray,
             mailArray:mailArray,
             deviceArray:deviceArray,
@@ -52,7 +52,7 @@ exports.datatree_rank=function(req,res){
         }
 
         res.render('datatree_page_rank', {
-            title: 'datatree',
+            title: 'Data Tree (Rank Collection)',
             usedfunction: usedfunction,
             date:date,
             user_id:user_id,
@@ -80,7 +80,7 @@ exports.datatree_location=function(req,res){
         }
 
         res.render('datatree_page_location', {
-            title: 'datatree',
+            title: 'Data Tree (Location Collection)',
             latArray: latArray,
             lngArray:lngArray,
             addressArray:addressArray,
@@ -105,8 +105,10 @@ exports.datatree_push=function(req,res){
             useridArray.push('\''+doc[i].userid+'\'');
         }
 
+        console.log(dateArray);
+
         res.render('datatree_page_push', {
-            title: 'datatree',
+            title: 'Data Tree (Push Collection)',
             dateArray: dateArray,
             msgArray:msgArray,
             useridArray:useridArray,
@@ -120,7 +122,7 @@ exports.datatree_page= function (req, res) {
     // 로그인 체크
     restrict(req, res, function() {
         res.render('datatree_page', {
-            title: 'datatree'
+            title: 'Data Tree'
         });
     });
 }

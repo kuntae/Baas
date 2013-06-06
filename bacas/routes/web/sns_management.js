@@ -17,6 +17,6 @@ function restrict(req, res, next) {
 exports.sns_page = function(req, res) {
     console.log(file_name +  " get sns page");
     restrict(req, res, function() {
-        res.render('sns_page',{title:"SNS에 자랑하기"});
+        res.render('sns_page',{title:"Boast To SNS"});
     });
 }
