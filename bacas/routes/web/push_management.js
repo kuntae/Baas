@@ -104,7 +104,7 @@ exports.regist = function(req, res) { // Device ID 등록하기
 exports.send_push = function(req, res) {
     var gcm = require('node-gcm');
     var message = new gcm.Message();
-    var sender = new gcm.Sender('AIzaSyBptZgxytckKtDPAX8nVnKEvORISa7SR9s'); // API Key
+    var sender = new gcm.Sender('AIzaSyDk9LE1o9omiCZjeePeUoVj6FowMI9OQmk'); // API Key
 
     // message.addData('message', res.message); // Key, Value (보내고 싶은 메시지)
     message.addData('message', req.body.message);
@@ -112,8 +112,10 @@ exports.send_push = function(req, res) {
     message.delayWhileIdle = true;
     message.timeToLive = 3;
 
+    if (req.body.to == null)
+        res.redirect('/web/push_management');
     // Device ID Push
-    if (req.body.to.length > 1) {
+    else if (req.body.to.length > 1) {
         for (var i = 0; i < req.body.to.length; i++) {
             db.expp.userinfo.findOne({id:req.body.to[i]}, function(err, doc) {
                 try {
@@ -125,7 +127,7 @@ exports.send_push = function(req, res) {
                     sender.send(message, registrationIds, 4, function (err, result) {
                         if(err) {
                             console.log(err);
-                        }else{
+                        } else {
                             console.log(result);
                             var infos = new db.expp.pushinfo();
                             var cnt = 0;
@@ -194,7 +196,7 @@ exports.send_push = function(req, res) {
 exports.reserve_send_push = function(req, res) {
     var gcm = require('node-gcm');
     var message = new gcm.Message();
-    var sender = new gcm.Sender('AIzaSyBptZgxytckKtDPAX8nVnKEvORISa7SR9s'); // API Key
+    var sender = new gcm.Sender('AIzaSyDk9LE1o9omiCZjeePeUoVj6FowMI9OQmk'); // API Key
     var date = require('date-utils');
 
     // message.addData('message', res.message); // Key, Value (보내고 싶은 메시지)
@@ -217,7 +219,10 @@ exports.reserve_send_push = function(req, res) {
     console.log(reserve_time);
 
     setTimeout(function() {
-        if (req.body.to.length > 1) {
+        if (req.body.to == null)
+            res.redirect('/web/push_management');
+
+        else if (req.body.to.length > 1) {
             for (var i = 0; i < req.body.to.length; i++) {
                 db.expp.userinfo.findOne({id:req.body.to[i]}, function(err, doc) {
                     try {

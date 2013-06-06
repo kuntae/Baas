@@ -49,6 +49,9 @@ exports.location_page = function(req, res) {
 exports.addpoi= function(req, res) {
     var instance = new db.expp.poiinfo();
 
+    if (req.body.lat == '')
+        res.redirect('/web/location_management');
+
     instance.lat = req.body.lat;
     instance.lng = req.body.lng;
     instance.address = req.body.address;
@@ -69,7 +72,10 @@ exports.addpoi= function(req, res) {
 exports.removepoi= function(req, res) {
     console.log(req.body.remove);
 
-    if (req.body.remove.length > 1) {
+    if (req.body.remove == null)
+        res.redirect('/web/location_management');
+
+    else if (req.body.remove.length > 1) {
                 for (var i = 0; i < req.body.remove.length; i++) {
                     db.expp.poiinfo.remove({lat : req.body.remove[i]}, function(err) {
                         try { }
