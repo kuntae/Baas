@@ -61,7 +61,7 @@ exports.user_regist_deviceid = function (req, res) {
 
 
         // 검색;
-    console.log('error = '+imeiid);
+    console.log('imeiid = '+imeiid);
     db.expp.userinfo.findOne({imeiid:imeiid},function(err,doc){
         // 기존의 id가 없다면 저장
         try{

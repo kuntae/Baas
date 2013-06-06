@@ -70,24 +70,21 @@ exports.removepoi= function(req, res) {
     console.log(req.body.remove);
 
     if (req.body.remove.length > 1) {
-        for (var i = 0; i < req.body.remove.length; i++) {
-            db.expp.poiinfo.remove({lat : req.body.remove[i]}, function(err) {
-                try {
-                    res.redirect('/web/location_management');
-                }
-                catch (err) {
-                    console.log(err);
-                }
-            });
+                for (var i = 0; i < req.body.remove.length; i++) {
+                    db.expp.poiinfo.remove({lat : req.body.remove[i]}, function(err) {
+                        try { }
+                        catch (err) {
+                            console.log('first : '+err);
+                        }
+                    });
         }
     }
 
     db.expp.poiinfo.remove({lat : req.body.remove}, function(err) {
-        try {
-            res.redirect('/web/location_management');
-        }
+        try { }
         catch (err) {
-            console.log(err);
+            console.log('second   :  '+err);
         }
     });
+    res.redirect('/web/location_management');
 }

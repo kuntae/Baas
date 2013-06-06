@@ -169,7 +169,7 @@ exports.send_push = function(req, res) {
                     db.expp.userinfo.findOne({deviceid:registrationIds[0]},function(err,docs){
                         var infos = new db.expp.pushinfo();
                         var tmp = getdate(6);
-                        infos.date = tmp;                            3
+                        infos.date = tmp;
                         infos.message = req.body.message;
                         infos.userid = docs.id;
 
