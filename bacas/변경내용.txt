@@ -1,3 +1,0 @@
-1. db구조 변경
-2. usermanagement의 내용 중 개발자 로그인에 대한 기능 developer_management로 이동. <동작 확인>
-3. user_management에서 userinfos의 내용 테이블 형태로 출력<동작 확인>
