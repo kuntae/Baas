@@ -1,0 +1,16 @@
+{
+    "name": "bass",
+    "version": "2.0.0",
+    "main": "./dist/index.js",
+    "typings": "./dist/index.d.ts",
+    "author": {
+        "name": "kuntae",
+        "email": "kuntae89@gmail.com"
+    },
+    "contributors": [],
+    "dependencies": {
+        "@types/node": "^8.0.26",
+        "express": "*",
+        "mongoose": "*"
+    }
+}
