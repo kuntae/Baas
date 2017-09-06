@@ -3,7 +3,8 @@
         "outDir": "./dist",
         "sourceMap": true,
         "strictNullChecks": true,
-        "module": "es6"
+        "declaration": true,
+        "moduleResolution": "node"
     },
     "include": [
         "./src"
