@@ -1,6 +1,11 @@
 *.class
+*-lock.json
 
 # Package Files #
 *.jar
 *.war
 *.ear
+
+# typescript compile dir
+dist/
+node_modules/
